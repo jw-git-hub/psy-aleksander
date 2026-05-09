@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO: после подключения домена заменить https://example.com на реальный -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap-0.9">
+  <url>
+    <loc>https://example.com/</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

@@ -1,0 +1,75 @@
+/* =============================================
+   Стили служебных юр-страниц (privacy и т.п.)
+   ============================================= */
+.legal {
+  padding: var(--spacing-xl) 0 var(--spacing-xxl);
+}
+
+.legal__container {
+  max-width: 760px;
+}
+
+.legal__title {
+  margin: 0 0 var(--spacing-xs);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.legal__updated {
+  margin: 0 0 var(--spacing-lg);
+  color: var(--color-text-light);
+  font-size: var(--fs-small);
+}
+
+.legal__section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.legal__section h2 {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--fs-h3);
+  color: var(--color-primary);
+}
+
+.legal__section p,
+.legal__section li {
+  line-height: 1.65;
+  color: var(--color-text);
+}
+
+.legal__section p {
+  margin: 0 0 var(--spacing-sm);
+}
+
+.legal__section ul {
+  margin: 0 0 var(--spacing-sm);
+  padding-left: var(--spacing-md);
+}
+
+.legal__section li {
+  margin-bottom: 4px;
+}
+
+.legal__section a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal__section a:hover {
+  color: var(--color-accent-hover);
+}
+
+.legal__back {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+}
+
+/* Простая шапка на юр-страницах — только лого, без навигации/CTA */
+.header__inner--simple {
+  justify-content: center;
+}
+
+.header__inner--simple .logo {
+  align-items: center;
+  text-align: center;
+}

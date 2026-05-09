@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /pages/privacy.html
+
+# TODO: после подключения домена заменить https://example.com на реальный
+Sitemap: https://example.com/sitemap.xml

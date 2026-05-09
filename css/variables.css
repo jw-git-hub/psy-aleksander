@@ -1,0 +1,69 @@
+/* =============================================
+   CSS-переменные — Сайт психолога Александра Красногора
+   Все цвета, шрифты, размеры и эффекты определяются здесь
+   ============================================= */
+
+:root {
+  /* --- Цветовая палитра --- */
+  --color-primary: #4A6B6A;          /* тёмный тиловый — заголовки, навигация */
+  --color-primary-light: #6B9190;    /* светлый тиловый — ховеры, акценты */
+  --color-primary-dark: #354E4D;     /* совсем тёмный — секция контактов */
+  --color-accent: #C08B5C;           /* тёплая медь — CTA-кнопки, акценты */
+  --color-accent-hover: #A87548;     /* медь при наведении */
+  --color-bg: #FAF8F5;               /* тёплый белый — основной фон */
+  --color-bg-alt: #F0EDE7;           /* песочно-серый — чередование секций */
+  --color-bg-dark: #E8E4DD;          /* для карточек на альтернативном фоне */
+  --color-text: #2D2D2D;             /* почти чёрный — основной текст */
+  --color-text-light: #6B6B6B;      /* серый — подписи, мета-текст */
+  --color-text-on-dark: #FAF8F5;    /* текст на тёмном фоне */
+  --color-white: #FFFFFF;
+  --color-border: #E0DCD5;           /* границы, разделители */
+  --color-success: #5A8A6A;          /* зелёный для галочек */
+  --color-footer-bg: #1F2E2D;        /* совсем тёмный — футер */
+
+  /* --- Шрифты (без засечек) --- */
+  --font-heading: 'Manrope', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+
+  /* --- Размеры шрифтов (адаптивные через clamp) --- */
+  --fs-hero: clamp(2.2rem, 5vw, 3.5rem);
+  --fs-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --fs-h3: clamp(1.2rem, 2.5vw, 1.5rem);
+  --fs-body: 1.0625rem;     /* 17px */
+  --fs-small: 0.9375rem;    /* 15px */
+  --fs-btn: 1rem;
+  --fs-price: clamp(2rem, 4vw, 2.75rem);
+
+  /* --- Отступы --- */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2.5rem;
+  --spacing-xl: 4rem;
+  --spacing-xxl: 6rem;
+
+  /* --- Контейнер --- */
+  --container-max: 1140px;
+  --container-padding: 1.25rem;
+
+  /* --- Скругления --- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 50%;
+
+  /* --- Тени --- */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+  --shadow-btn: 0 4px 15px rgba(192, 139, 92, 0.3);
+  --shadow-btn-hover: 0 6px 22px rgba(192, 139, 92, 0.45);
+  --shadow-header: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+  /* --- Переходы --- */
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* --- Z-индексы --- */
+  --z-header: 100;
+  --z-nav-mobile: 110;
+}
