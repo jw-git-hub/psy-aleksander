@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Логи
+*.log
+npm-debug.log*
+
+# Временные файлы
+*.tmp
+*.swp
+*~
+
+# Зависимости (на случай если когда-то добавятся)
+node_modules/
+
+# Окружение
+.env
+.env.local
