@@ -125,3 +125,8 @@
 - **[ЦЕЛИ]** 6 новых атрибутов `data-analytics` в index.html: `pricing_individual_anchor` (кнопка «Записаться» инд. консультация), `pricing_family_anchor` (семейное консультирование), `contacts_telegram_dm`, `contacts_telegram_channel`, `contacts_max_dm`, `contacts_max_chat`
 - **[ЦЕЛИ]** В `js/quiz.js` добавлены 2 события через `ym(..., 'reachGoal', ...)`: `quiz_started` (флаг — первое `change` в форме, один раз), `quiz_completed` (при входе в `showResult()`); в обоих guard-проверка `typeof window.ym === 'function'`
 - **[ПРАВОВОЙ]** `pages/privacy.html`: раздел 2 актуализирован (убрано «в будущем» и VK Pixel); добавлен пункт 5 «Яндекс.Метрика» с описанием Webvisor, ссылками на политику Яндекса и opt-out; прежние разделы 5–7 сдвинуты в 6–8
+
+### 2026-05-09 (favicon — монограмма АК)
+- **[ФИЧА]** Создан `favicon.svg` — SVG-заглушка с кириллической монограммой «АК»: круглый фон `#4A6B6A`, белый текст `#FAF8F5`, `font-size: 28`, `font-weight: 700`, system-ui без внешних зависимостей
+- **[ФИЧА]** Создан `apple-touch-icon.png` 180×180 px через macOS-нативный `qlmanage -t -s 180` (способ 4 из 4 — rsvg-convert и ImageMagick не были установлены)
+- **[HTML]** В `<head>` обоих HTML-файлов (`index.html`, `pages/privacy.html`) после `<meta name="theme-color">` добавлен блок из 4 строк: `rel="icon"` SVG, `rel="alternate icon"` PNG-фолбэк, `rel="apple-touch-icon"`, `rel="mask-icon"` с цветом `#4A6B6A`
