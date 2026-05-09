@@ -144,3 +144,4 @@
 - **[ФИКС]** `pages/privacy.html` стр. 57: `krasnogor-psy` → `psy-krasnogor.pro` в теге `<strong>` (правильное доменное имя)
 - **[ПРАВОВОЙ]** `pages/privacy.html` стр. 62: формулировка про формы заменена на юридически точную — квиз упомянут явно, с пояснением что данные не покидают браузер
 - **[ПЕРФ]** `js/main.js` `closeLightbox()`: `lightboxImg.src = ''` → `lightboxImg.removeAttribute('src')` — устранён паразитный GET-запрос текущей страницы при пустом src
+- **[ПЕРФ]** SVG-sprite — 17 дублирующихся inline SVG (13 chevron + 4 star) → один `<symbol>`-блок + 17 `<use>`-ссылок. ~1.6 KB экономии в HTML.

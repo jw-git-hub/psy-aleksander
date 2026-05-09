@@ -201,6 +201,18 @@
 </head>
 <body>
 
+  <!-- SVG sprite — переиспользуемые иконки -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" class="svg-sprite">
+    <defs>
+      <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l2.39 7.36H22l-6.18 4.49L18.21 22 12 17.27 5.79 22l2.39-8.15L2 9.36h7.61z"/>
+      </symbol>
+    </defs>
+  </svg>
+
   <!-- Yandex.Metrika noscript fallback -->
   <noscript><div><img src="https://mc.yandex.ru/watch/109129242" class="metrika-pixel" alt=""></div></noscript>
 
@@ -509,11 +521,11 @@
           <details class="approach-card animate-on-scroll" name="approach-method">
             <summary class="approach-card__head">
               <span class="approach-card__star" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.39 7.36H22l-6.18 4.49L18.21 22 12 17.27 5.79 22l2.39-8.15L2 9.36h7.61z"/></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-star"/></svg>
               </span>
               <span class="approach-card__name">Когнитивно-поведенческая терапия (КПТ)</span>
               <span class="approach-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="approach-card__body">
@@ -524,11 +536,11 @@
           <details class="approach-card animate-on-scroll" name="approach-method">
             <summary class="approach-card__head">
               <span class="approach-card__star" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.39 7.36H22l-6.18 4.49L18.21 22 12 17.27 5.79 22l2.39-8.15L2 9.36h7.61z"/></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-star"/></svg>
               </span>
               <span class="approach-card__name">Гештальт-терапия</span>
               <span class="approach-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="approach-card__body">
@@ -539,11 +551,11 @@
           <details class="approach-card animate-on-scroll" name="approach-method">
             <summary class="approach-card__head">
               <span class="approach-card__star" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.39 7.36H22l-6.18 4.49L18.21 22 12 17.27 5.79 22l2.39-8.15L2 9.36h7.61z"/></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-star"/></svg>
               </span>
               <span class="approach-card__name">Эмоционально-фокусированная терапия (ЭФТ)</span>
               <span class="approach-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="approach-card__body">
@@ -554,11 +566,11 @@
           <details class="approach-card animate-on-scroll" name="approach-method">
             <summary class="approach-card__head">
               <span class="approach-card__star" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.39 7.36H22l-6.18 4.49L18.21 22 12 17.27 5.79 22l2.39-8.15L2 9.36h7.61z"/></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-star"/></svg>
               </span>
               <span class="approach-card__name">Элементы mindfulness (осознанности)</span>
               <span class="approach-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="approach-card__body">
@@ -921,7 +933,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">Сколько длится консультация?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
@@ -933,7 +945,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">Как записаться на консультацию?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
@@ -945,7 +957,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">Сколько стоит консультация?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
@@ -957,7 +969,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">В&nbsp;каком формате проходят консультации?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
@@ -969,7 +981,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">Соблюдается ли конфиденциальность?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
@@ -981,7 +993,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">Я никогда не&nbsp;был у&nbsp;психолога. Это не&nbsp;стыдно?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
@@ -993,7 +1005,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">Как понять, что мне нужен психолог, а&nbsp;не&nbsp;психиатр?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
@@ -1005,7 +1017,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">А&nbsp;вдруг психолог не&nbsp;поможет&nbsp;— я&nbsp;просто потеряю время?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
@@ -1017,7 +1029,7 @@
             <summary class="faq-card__head">
               <span class="faq-card__question">Что если партнёр против парной терапии?</span>
               <span class="faq-card__chevron" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
               </span>
             </summary>
             <div class="faq-card__body">
