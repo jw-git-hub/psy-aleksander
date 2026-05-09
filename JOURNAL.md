@@ -130,3 +130,8 @@
 - **[ФИЧА]** Создан `favicon.svg` — SVG-заглушка с кириллической монограммой «АК»: круглый фон `#4A6B6A`, белый текст `#FAF8F5`, `font-size: 28`, `font-weight: 700`, system-ui без внешних зависимостей
 - **[ФИЧА]** Создан `apple-touch-icon.png` 180×180 px через macOS-нативный `qlmanage -t -s 180` (способ 4 из 4 — rsvg-convert и ImageMagick не были установлены)
 - **[HTML]** В `<head>` обоих HTML-файлов (`index.html`, `pages/privacy.html`) после `<meta name="theme-color">` добавлен блок из 4 строк: `rel="icon"` SVG, `rel="alternate icon"` PNG-фолбэк, `rel="apple-touch-icon"`, `rel="mask-icon"` с цветом `#4A6B6A`
+
+### 2026-05-09 (Pre-show audit fix)
+- **[ФИКС]** `pages/privacy.html` стр. 57: `krasnogor-psy` → `psy-krasnogor.pro` в теге `<strong>` (правильное доменное имя)
+- **[ПРАВОВОЙ]** `pages/privacy.html` стр. 62: формулировка про формы заменена на юридически точную — квиз упомянут явно, с пояснением что данные не покидают браузер
+- **[ПЕРФ]** `js/main.js` `closeLightbox()`: `lightboxImg.src = ''` → `lightboxImg.removeAttribute('src')` — устранён паразитный GET-запрос текущей страницы при пустом src

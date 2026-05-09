@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('is-locked');
     // Очищаем src, чтобы не держать большой ресурс в памяти
     if (lightboxImg) {
-      lightboxImg.src = '';
+      lightboxImg.removeAttribute('src');
       lightboxImg.alt = '';
     }
     if (lastFocusedDocBtn) {
