@@ -1527,92 +1527,6 @@
     padding: var(--spacing-xxl) 0;
   }
 
-  /* --- Навигация: возвращаем горизонтальное меню --- */
-  .burger {
-    display: none;
-  }
-
-  .nav {
-    position: static;
-    width: auto;
-    padding: 0;
-    background: transparent;
-    transform: none;
-    box-shadow: none;
-  }
-
-  .nav__list {
-    flex-direction: row;
-    gap: var(--spacing-md);
-  }
-
-  .nav__link {
-    font-size: 1rem;
-    padding: var(--spacing-xs) 0;
-  }
-
-  .nav__link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 2px;
-    background-color: var(--color-accent);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform var(--transition-base);
-  }
-
-  .nav__link:hover::after,
-  .nav__link.is-active::after {
-    transform: scaleX(1);
-  }
-
-  /* Затемнение нужно только на мобильных */
-  .nav-backdrop {
-    display: none;
-  }
-
-  /* --- Шапка на десктопе чуть просторнее --- */
-  .header__inner {
-    gap: var(--spacing-md);
-    padding-block: 1rem;
-    min-height: 72px;
-  }
-
-  /* --- CTA-кнопка в шапке (на мобильном скрыта — есть sticky-bar) --- */
-  .header__cta {
-    display: inline-block;
-    padding: 0.5rem 1.25rem;
-    font-size: var(--fs-small);
-    border-radius: var(--radius-md);
-    /* Визуально: логотип | навигация | CTA.
-       Порядок в DOM: логотип → CTA → бургер → nav.
-       На десктопе бургер hidden, поэтому через order переставляем
-       CTA в конец, а nav в середину */
-    order: 3;
-  }
-
-  .header__cta:hover {
-    transform: none;
-  }
-
-  /* Навигация — в середину между логотипом (order 1 по умолчанию)
-     и CTA (order 3) */
-  .nav {
-    order: 2;
-  }
-
-  /* --- Логотип на десктопе крупнее --- */
-  .logo__name {
-    font-size: 1.25rem;
-  }
-
-  .logo__title {
-    font-size: 0.8125rem;
-  }
-
   /* --- Hero: двухколоночная раскладка на 768+ --- */
   .hero__container {
     flex-direction: row;
@@ -1717,6 +1631,87 @@
    Адаптивность — Desktop (от 1024px)
    ============================================= */
 @media (min-width: 1024px) {
+
+  /* --- Шапка / навигация: переход на горизонтальное меню --- */
+  .burger {
+    display: none;
+  }
+
+  .nav {
+    position: static;
+    width: auto;
+    padding: 0;
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+    order: 2;
+  }
+
+  .nav__list {
+    flex-direction: row;
+    gap: var(--spacing-md);
+  }
+
+  .nav__link {
+    font-size: 1rem;
+    padding: var(--spacing-xs) 0;
+  }
+
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--transition-base);
+  }
+
+  .nav__link:hover::after,
+  .nav__link.is-active::after {
+    transform: scaleX(1);
+  }
+
+  /* Затемнение нужно только на мобильных */
+  .nav-backdrop {
+    display: none;
+  }
+
+  /* --- Шапка на десктопе чуть просторнее --- */
+  .header__inner {
+    gap: var(--spacing-md);
+    padding-block: 1rem;
+    min-height: 72px;
+  }
+
+  /* --- CTA-кнопка в шапке (на мобильном скрыта — есть sticky-bar) --- */
+  .header__cta {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    font-size: var(--fs-small);
+    border-radius: var(--radius-md);
+    /* Визуально: логотип | навигация | CTA.
+       Порядок в DOM: логотип → CTA → бургер → nav.
+       На десктопе бургер hidden, поэтому через order переставляем
+       CTA в конец, а nav в середину */
+    order: 3;
+  }
+
+  .header__cta:hover {
+    transform: none;
+  }
+
+  /* --- Логотип на десктопе крупнее --- */
+  .logo__name {
+    font-size: 1.25rem;
+  }
+
+  .logo__title {
+    font-size: 0.8125rem;
+  }
 
   /* --- Hero: фото крупнее на десктопе --- */
   .hero__media {

@@ -131,6 +131,9 @@
 - **[ФИЧА]** Создан `apple-touch-icon.png` 180×180 px через macOS-нативный `qlmanage -t -s 180` (способ 4 из 4 — rsvg-convert и ImageMagick не были установлены)
 - **[HTML]** В `<head>` обоих HTML-файлов (`index.html`, `pages/privacy.html`) после `<meta name="theme-color">` добавлен блок из 4 строк: `rel="icon"` SVG, `rel="alternate icon"` PNG-фолбэк, `rel="apple-touch-icon"`, `rel="mask-icon"` с цветом `#4A6B6A`
 
+### 2026-05-09 (фикс навигации — брейкпоинт меню 768→1024)
+- **[ФИКС]** Брейкпоинт переключения бургер→горизонтальная навигация поднят с 768px до 1024px: правила `.burger`, `.nav`, `.nav__list`, `.nav__link`, `.nav__link::after`, `.nav__link.is-active::after`, `.nav-backdrop`, `.header__inner`, `.header__cta`, `.logo__name`, `.logo__title` перенесены из `@media (min-width: 768px)` в `@media (min-width: 1024px)`; `MOBILE_BREAKPOINT` в `js/main.js` изменён с `768` на `1024`. На 768–1023px сохраняется планшетный layout секций (hero/help/pricing и т.п.), меню — бургер
+
 ### 2026-05-09 (Pre-show audit fix)
 - **[ФИКС]** `pages/privacy.html` стр. 57: `krasnogor-psy` → `psy-krasnogor.pro` в теге `<strong>` (правильное доменное имя)
 - **[ПРАВОВОЙ]** `pages/privacy.html` стр. 62: формулировка про формы заменена на юридически точную — квиз упомянут явно, с пояснением что данные не покидают браузер

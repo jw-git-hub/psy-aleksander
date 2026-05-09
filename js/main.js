@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('.nav');
   const navBackdrop = document.querySelector('.nav-backdrop');
   const navLinks = document.querySelectorAll('.nav__link');
-  const MOBILE_BREAKPOINT = 768;
+  const MOBILE_BREAKPOINT = 1024;
 
   // Синхронизирует состояние мобильного меню при ресайзе.
   // - На десктопе: nav всегда доступен, обязательно снимаем
