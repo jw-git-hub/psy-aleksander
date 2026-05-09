@@ -82,6 +82,14 @@
 - **[JS]** Модуль 9 в `main.js`: `requestAnimationFrame`-throttled scroll/resize обработчик; показывает панель когда hero ушёл вверх и футер не близко (зазор 80px); скрывает при `body.is-locked` (открытое меню или лайтбокс) через `MutationObserver` на классе body; первичный вызов при инициализации
 - **[A11Y]** `prefers-reduced-motion` в `base.css` дополнен — `.sticky-cta { transition: none }` внутри существующего `@media (prefers-reduced-motion: reduce)` блока
 
+### 2026-05-09 (этап F — только онлайн, фикс квиза, стоимость, футер)
+- **[КОНТЕНТ]** Убраны все упоминания очной работы и Москвы: title/description мета-тегов, hero eyebrow, секция «Стоимость» (формат), секция «Как проходит работа» (формат), FAQ-вопрос про формат переформулирован + синхронизирован с JSON-LD FAQPage
+- **[SEO]** JSON-LD LocalBusiness: добавлены `areaServed: "RU"` и `serviceType: "Online psychotherapy"`; description обновлён до «Онлайн-консультации...»
+- **[КВИЗ]** Удалён шаг 2 «Удобный формат?» из HTML: осталось 3 вопроса вместо 4. Обновлены data-step (3→2, 4→3, 5→4), прогресс-текст, subtitle секции
+- **[КВИЗ/JS]** quiz.js: удалена константа Q2_LABELS; `buildRecommendation(q1, q2)` → `buildRecommendation(q1)`, `formatPart` удалён, итог «(онлайн)»; из `buildAnswerText` удалена строка «Формат»; из `showResult` убран `q2`
+- **[ФИКС]** `.quiz [hidden] { display: none }` в style.css — специфичность (0,1,1) перекрывает (0,1,0) у `.btn`, кнопка «Далее» теперь скрыта на финальном экране
+- **[ДИЗАЙН]** `.pricing-card__btn`: `align-self: flex-start` → `align-self: center` — кнопки в карточках «Стоимость» по горизонтальному центру
+
 ### 2026-05-09 (этап E — defer/decoding/UTM, privacy + robots/sitemap)
 - **[ПЕРФ]** Script-теги перемещены из конца `<body>` в `<head>` с атрибутом `defer` — параллельная загрузка с HTML, выполнение после парсинга DOM; у `.hero__photo` `decoding="async"` уже был, добавлен к `.about__photo-img` и 4 `.doc-card__img`
 - **[JS]** Модуль 10 в `main.js` — UTM-метки: читает utm_source/medium/campaign/term/content, yclid, gclid из URL и сохраняет в `sessionStorage('utm')`, молча игнорирует ошибки приватного режима; в ссылки на t.me параметры не дописываем (Telegram их игнорирует)

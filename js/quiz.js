@@ -1,6 +1,6 @@
 /* =============================================
    Квиз «Подбор формата работы»
-   - 4 шага опроса + финальный экран с результатом
+   - 3 шага опроса + финальный экран с результатом
    - формирование текста для копирования в Telegram
    - copy-to-clipboard через navigator.clipboard
    ============================================= */
@@ -31,11 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     crisis: 'Кризис, выгорание, потеря',
     other: 'Другое — расскажу при встрече'
   };
-  const Q2_LABELS = {
-    online: 'Онлайн',
-    offline: 'Очно в Москве',
-    any: 'Без разницы'
-  };
   const Q3_LABELS = {
     never: 'Впервые обращаюсь',
     some: 'Был опыт, не подошло',
@@ -47,13 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
     later: 'Просто изучаю'
   };
 
-  /* Рекомендация формата на основе ответов */
-  const buildRecommendation = (q1, q2) => {
-    const formatPart =
-      q2 === 'online' ? 'онлайн' :
-      q2 === 'offline' ? 'очно в Москве' :
-      'онлайн или очно — на ваш выбор';
-
+  /* Рекомендация на основе запроса */
+  const buildRecommendation = (q1) => {
     const themePart = {
       couple: 'парный или семейный формат',
       anxiety: 'индивидуальные сессии с фокусом на тревоге',
@@ -62,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       other: 'индивидуальный подбор формата'
     }[q1] || 'индивидуальный подбор формата';
 
-    return `Похоже, вам подойдёт ${themePart} (${formatPart}). На первой 20-минутной встрече мы это обсудим — без обязательств продолжать.`;
+    return `Похоже, вам подойдёт ${themePart} (онлайн). На первой 20-минутной встрече мы это обсудим — без обязательств продолжать.`;
   };
 
   /* Текст для копирования и отправки в Telegram */
@@ -71,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
       'Здравствуйте, Александр! Я с квиза на сайте.',
       '',
       `Запрос: ${Q1_LABELS[data.q1] || '—'}`,
-      `Формат: ${Q2_LABELS[data.q2] || '—'}`,
       `Опыт: ${Q3_LABELS[data.q3] || '—'}`,
       `Когда удобно начать: ${Q4_LABELS[data.q4] || '—'}`,
       '',
@@ -117,12 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const data = new FormData(form);
     const obj = {
       q1: data.get('q1') || '',
-      q2: data.get('q2') || '',
       q3: data.get('q3') || '',
       q4: data.get('q4') || ''
     };
     if (resultTextEl) {
-      resultTextEl.textContent = buildRecommendation(obj.q1, obj.q2);
+      resultTextEl.textContent = buildRecommendation(obj.q1);
     }
     if (answerTextEl) {
       answerTextEl.textContent = buildAnswerText(obj);

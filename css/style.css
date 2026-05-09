@@ -1073,7 +1073,7 @@
 }
 
 .pricing-card__btn {
-  align-self: flex-start;
+  align-self: center;
 }
 
 /* Подробности под карточками: длительность / формат / оплата */
@@ -1499,6 +1499,11 @@
 /* Состояние "скопировано" — toggle через JS */
 .quiz__copy-btn.is-copied .quiz__copy-default { display: none; }
 .quiz__copy-btn.is-copied .quiz__copy-success { display: inline; }
+
+/* Скрытие элементов с атрибутом [hidden] внутри квиза.
+   Специфичность (0,1,1) перекрывает (0,1,0) у .btn и предотвращает
+   показ кнопки «Далее» на финальном экране результата */
+.quiz [hidden] { display: none; }
 
 /* Невидимый textarea для clipboard-фолбэка (старые браузеры / file://) */
 .quiz__clipboard-fallback {
