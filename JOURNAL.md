@@ -110,6 +110,14 @@
 - **[E]** Установлен `cwebp` (brew install webp). Сгенерированы WebP-версии 5 файлов (q=85). Экономия: photo.jpg 94 705 → photo.webp 41 778 (−56%), 1.jpg 194 292 → 1.webp 138 766 (−29%); у 2.jpg/3.jpg/4.jpg WebP вышел немного тяжелее оригиналов (насыщенный мелкий текст дипломов — edge-case). Preload в `<head>` переключён на WebP. `<picture><source type="image/webp">` добавлен к hero, about и 4 doc-картам
 - **[E-фикс]** 2.webp и 4.webp пересжаты с `-q 75`: 2.webp 298 978 → 204 060 байт (−32% vs JPG 282 972), 4.webp 264 412 → 178 844 байт (−31% vs JPG 260 276). Оба WebP теперь легче оригиналов — `<source>` остались, файлы не удалялись
 
+### 2026-05-09 (локализация шрифтов)
+- **[ПЕРФ]** Зависимость от Google Fonts полностью устранена. Inter и Manrope скачаны локально в `/fonts/`, Google Fonts CDN убран из обоих HTML-файлов
+- **[АНАЛИЗ]** Inter v20 и Manrope v20 — переменные шрифты (variable font): один файл WOFF2 покрывает весь диапазон весов. Скачаны по 4 файла на шрифт (subsets: cyrillic-ext, cyrillic, latin-ext, latin) — итого 8 файлов
+- **[АНАЛИЗ]** Реально используемые веса: Inter — 400/500/600; Manrope — 600/700. Inter 700 и Manrope 500/800 нигде в коде не применяются — не скачивались
+- **[CSS]** Создан `css/fonts.css` с 8 `@font-face`-правилами и `font-display: swap`; диапазоны весов заданы как `400 600` / `600 700` (синтаксис variable font)
+- **[HTML]** В `index.html` и `pages/privacy.html`: блок Google Fonts (`preconnect` + CDN-link) заменён на `<link rel="preload">` для 4 критичных файлов (latin + cyrillic для Inter 400 и Manrope) и `<link rel="stylesheet" href="css/fonts.css">`
+- **[РАЗМЕРЫ]** Суммарно 235 КБ: inter-400-latin.woff2 (47 КБ), inter-400-latin-ext.woff2 (83 КБ), inter-400-cyrillic.woff2 (18 КБ), inter-400-cyrillic-ext.woff2 (25 КБ), manrope-latin.woff2 (24 КБ), manrope-latin-ext.woff2 (15 КБ), manrope-cyrillic.woff2 (14 КБ), manrope-cyrillic-ext.woff2 (2 КБ)
+
 ### 2026-05-09 (Яндекс.Метрика — аналитика и трекинг конверсий)
 - **[АНАЛИТИКА]** Создан `js/metrika.js` — IIFE-инициализация счётчика 109129242 (webvisor, clickmap, trackLinks, accurateTrackBounce, ecommerce dataLayer); подключён в `<head>` с `async` во всех HTML-файлах (index.html и pages/privacy.html). Inline-скриптов нет — соблюдены правила CLAUDE.md
 - **[АНАЛИТИКА]** В начало `<body>` в index.html и pages/privacy.html добавлен `<noscript>`-пиксель через класс `.metrika-pixel` (position: absolute; left: -9999px) в style.css — без inline-стилей
