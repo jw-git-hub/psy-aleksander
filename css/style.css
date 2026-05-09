@@ -1291,6 +1291,11 @@
 .footer__copy {
   margin: 0;
   font-size: var(--fs-small);
+  /* Явный цвет нужен, т.к. базовый p { color: var(--color-text) } в base.css
+     перебивает наследованный rgba от .footer. Используем текст на тёмном
+     с пониженной непрозрачностью — аналогично .footer__link */
+  color: var(--color-text-on-dark);
+  opacity: 0.7;
 }
 
 .footer__nav {
