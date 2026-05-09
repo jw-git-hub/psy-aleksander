@@ -356,6 +356,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const stickyCta = document.getElementById('sticky-cta');
   const heroSection = document.querySelector('.hero');
   const footerEl = document.querySelector('.footer');
+  // Кнопка в шапке — скрывается, когда sticky-CTA активна, и возвращается обратно
+  const headerCta = document.querySelector('.header__cta');
 
   if (stickyCta && heroSection) {
     let scheduled = false;
@@ -367,6 +369,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (document.body.classList.contains('is-locked')) {
         stickyCta.classList.remove('is-visible');
         stickyCta.setAttribute('aria-hidden', 'true');
+        // is-locked = shouldShow false → класс --hidden убираем
+        if (headerCta) headerCta.classList.remove('header__cta--hidden');
         return;
       }
 
@@ -383,6 +387,12 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         stickyCta.classList.remove('is-visible');
         stickyCta.setAttribute('aria-hidden', 'true');
+      }
+
+      // Синхронизируем видимость CTA в шапке:
+      // когда sticky-CTA показана — кнопку в шапке скрываем, и наоборот
+      if (headerCta) {
+        headerCta.classList.toggle('header__cta--hidden', shouldShow);
       }
     };
 

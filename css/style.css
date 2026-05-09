@@ -64,9 +64,20 @@
   min-height: 60px;
 }
 
-/* --- CTA-кнопка в шапке (mobile-first: скрыта на мобильных) --- */
+/* --- CTA-кнопка в шапке (mobile-first: компактная версия) --- */
 .header__cta {
-  display: none;
+  display: inline-flex;
+  /* Компактный мобильный вариант — короткий padding и уменьшенный шрифт */
+  padding: 0.5rem 0.875rem;
+  font-size: var(--fs-small);
+  white-space: nowrap;
+}
+
+/* Скрытие CTA шапки через JS, когда активна sticky-CTA внизу.
+   !important нужен, чтобы перебить desktop-правило .header__cta { display: inline-block }
+   в @media (min-width: 1024px) с той же специфичностью (0,1,0) */
+.header__cta--hidden {
+  display: none !important;
 }
 
 /* --- Логотип --- */

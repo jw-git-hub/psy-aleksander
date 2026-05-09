@@ -134,6 +134,12 @@
 ### 2026-05-09 (фикс навигации — брейкпоинт меню 768→1024)
 - **[ФИКС]** Брейкпоинт переключения бургер→горизонтальная навигация поднят с 768px до 1024px: правила `.burger`, `.nav`, `.nav__list`, `.nav__link`, `.nav__link::after`, `.nav__link.is-active::after`, `.nav-backdrop`, `.header__inner`, `.header__cta`, `.logo__name`, `.logo__title` перенесены из `@media (min-width: 768px)` в `@media (min-width: 1024px)`; `MOBILE_BREAKPOINT` в `js/main.js` изменён с `768` на `1024`. На 768–1023px сохраняется планшетный layout секций (hero/help/pricing и т.п.), меню — бургер
 
+### 2026-05-09 (мобильный CTA в шапке + автоскрытие)
+- **[ФИЧА]** `.header__cta` теперь видна на мобильных (вместо `display: none` — `display: inline-flex` с компактным padding 0.5rem 0.875rem и `font-size: var(--fs-small)`). Три элемента в шапке (лого + CTA + бургер) помещаются за счёт уже существующего `gap: var(--spacing-sm)` в `.header__inner`
+- **[ФИЧА]** Добавлен CSS-класс `.header__cta--hidden { display: none !important }` для управления через JS (с `!important` для перебивания десктопного правила той же специфичности)
+- **[JS]** Модуль 9 (`main.js`): добавлена переменная `headerCta = document.querySelector('.header__cta')`; в `updateStickyCta()` добавлен `headerCta.classList.toggle('header__cta--hidden', shouldShow)` — CTA шапки скрывается ровно когда sticky-CTA появляется, и возвращается когда та уходит; при `is-locked` класс `--hidden` явно убирается
+- **[CSS]** `.sticky-cta` уже имеет `@media (min-width: 1024px) { display: none }` — на десктопе sticky-панель не появляется, дополнительных правил не потребовалось
+
 ### 2026-05-09 (Pre-show audit fix)
 - **[ФИКС]** `pages/privacy.html` стр. 57: `krasnogor-psy` → `psy-krasnogor.pro` в теге `<strong>` (правильное доменное имя)
 - **[ПРАВОВОЙ]** `pages/privacy.html` стр. 62: формулировка про формы заменена на юридически точную — квиз упомянут явно, с пояснением что данные не покидают браузер
