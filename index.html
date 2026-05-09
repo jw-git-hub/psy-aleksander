@@ -8,7 +8,6 @@
   <!-- SEO мета-теги -->
   <title>Семейный психолог Александр Красногор — онлайн-консультации</title>
   <meta name="description" content="Семейный психолог Александр Красногор. Помощь при тревоге, проблемах в отношениях, выгорании. Онлайн-консультации (Zoom, Telegram, Max). Запись на бесплатную первичную консультацию.">
-  <meta name="keywords" content="психолог, семейный психолог, консультация психолога, психолог онлайн, помощь психолога, КПТ, гештальт-терапия, тревога, отношения, выгорание">
   <link rel="canonical" href="https://jw-git-hub.github.io/psy-aleksander/">
 
   <!-- Open Graph -->
@@ -30,8 +29,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Preload hero-фото для ускорения LCP -->
-  <link rel="preload" as="image" href="img/photo.jpg" fetchpriority="high">
+  <!-- Preload hero-фото для ускорения LCP (WebP для поддерживающих браузеров) -->
+  <link rel="preload" as="image" href="img/photo.webp" type="image/webp" fetchpriority="high">
 
   <!-- Стили -->
   <link rel="stylesheet" href="css/variables.css">
@@ -52,7 +51,12 @@
     "jobTitle": "Семейный психолог",
     "description": "Семейный психолог. Онлайн-консультации при тревоге, проблемах в отношениях, эмоциональном выгорании. КПТ, гештальт-терапия, ЭФТ.",
     "url": "https://jw-git-hub.github.io/psy-aleksander/",
-    "priceRange": "от 3500 ₽",
+    "image": "https://jw-git-hub.github.io/psy-aleksander/img/photo.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "RU"
+    },
+    "priceRange": "$$",
     "openingHours": "Mo-Fr 09:00-20:00",
     "areaServed": "RU",
     "serviceType": "Online psychotherapy",
@@ -284,6 +288,7 @@
         <!-- Фото (обёртка picture для будущего WebP) -->
         <figure class="hero__media">
           <picture>
+            <source type="image/webp" srcset="img/photo.webp">
             <img
               class="hero__photo"
               src="img/photo.jpg"
@@ -566,15 +571,18 @@
       <div class="container about__grid">
         <!-- Портрет -->
         <figure class="about__photo animate-on-scroll">
-          <img
-            class="about__photo-img"
-            src="img/photo.jpg"
-            alt="Александр Красногор — семейный психолог"
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="600"
-          >
+          <picture>
+            <source type="image/webp" srcset="img/photo.webp">
+            <img
+              class="about__photo-img"
+              src="img/photo.jpg"
+              alt="Александр Красногор — семейный психолог"
+              loading="lazy"
+              decoding="async"
+              width="600"
+              height="600"
+            >
+          </picture>
         </figure>
 
         <!-- Колонка с текстом -->
@@ -681,13 +689,18 @@
               data-doc-caption="Диплом бакалавра — Психология (37.03.01). Московский гуманитарный институт имени Е. Р. Дашковой, 2016 г."
               aria-label="Открыть скан: диплом бакалавра, 2016"
             >
-              <img
-                class="doc-card__img"
-                src="img/psy-docs/3.jpg"
-                alt="Диплом бакалавра по направлению Психология, 2016 г."
-                loading="lazy"
-                decoding="async"
-              >
+              <picture>
+                <source type="image/webp" srcset="img/psy-docs/3.webp">
+                <img
+                  class="doc-card__img"
+                  src="img/psy-docs/3.jpg"
+                  alt="Диплом бакалавра по направлению Психология, 2016 г."
+                  loading="lazy"
+                  decoding="async"
+                  width="1280"
+                  height="913"
+                >
+              </picture>
               <span class="doc-card__overlay" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="11" cy="11" r="8"></circle>
@@ -712,13 +725,18 @@
               data-doc-caption="Диплом о профессиональной переподготовке — «Психологическое консультирование и психодиагностика». АНО «НИИДПО», 620 часов, 2023 г."
               aria-label="Открыть скан: диплом НИИДПО, 2023"
             >
-              <img
-                class="doc-card__img"
-                src="img/psy-docs/4.jpg"
-                alt="Диплом о профессиональной переподготовке: психологическое консультирование и психодиагностика, 2023 г."
-                loading="lazy"
-                decoding="async"
-              >
+              <picture>
+                <source type="image/webp" srcset="img/psy-docs/4.webp">
+                <img
+                  class="doc-card__img"
+                  src="img/psy-docs/4.jpg"
+                  alt="Диплом о профессиональной переподготовке: психологическое консультирование и психодиагностика, 2023 г."
+                  loading="lazy"
+                  decoding="async"
+                  width="1280"
+                  height="911"
+                >
+              </picture>
               <span class="doc-card__overlay" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="11" cy="11" r="8"></circle>
@@ -743,13 +761,18 @@
               data-doc-caption="Диплом о профессиональной переподготовке — «Практический психолог. Психолог-консультант». АНО ДПО «Институт прикладной психологии в социальной сфере», 1640 часов, 2024–2025 гг."
               aria-label="Открыть скан: диплом психолога-консультанта, 2025"
             >
-              <img
-                class="doc-card__img"
-                src="img/psy-docs/2.jpg"
-                alt="Диплом о профессиональной переподготовке: практический психолог, психолог-консультант, 2025 г."
-                loading="lazy"
-                decoding="async"
-              >
+              <picture>
+                <source type="image/webp" srcset="img/psy-docs/2.webp">
+                <img
+                  class="doc-card__img"
+                  src="img/psy-docs/2.jpg"
+                  alt="Диплом о профессиональной переподготовке: практический психолог, психолог-консультант, 2025 г."
+                  loading="lazy"
+                  decoding="async"
+                  width="1280"
+                  height="928"
+                >
+              </picture>
               <span class="doc-card__overlay" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="11" cy="11" r="8"></circle>
@@ -774,13 +797,18 @@
               data-doc-caption="Удостоверение о повышении квалификации — «Метод когнитивно-поведенческой терапии (КПТ) в работе с преодолением тревожности и страхов». АНО ДПО «Институт прикладной психологии в социальной сфере», 200 часов, 2025 г."
               aria-label="Открыть скан: удостоверение по КПТ, 2025"
             >
-              <img
-                class="doc-card__img"
-                src="img/psy-docs/1.jpg"
-                alt="Удостоверение о повышении квалификации по методу КПТ, 2025 г."
-                loading="lazy"
-                decoding="async"
-              >
+              <picture>
+                <source type="image/webp" srcset="img/psy-docs/1.webp">
+                <img
+                  class="doc-card__img"
+                  src="img/psy-docs/1.jpg"
+                  alt="Удостоверение о повышении квалификации по методу КПТ, 2025 г."
+                  loading="lazy"
+                  decoding="async"
+                  width="1280"
+                  height="905"
+                >
+              </picture>
               <span class="doc-card__overlay" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="11" cy="11" r="8"></circle>
