@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /pages/privacy.html
 
-# TODO: после подключения домена заменить https://example.com на реальный
-Sitemap: https://example.com/sitemap.xml
+# TODO: после подключения собственного домена заменить github.io на реальный
+Sitemap: https://jw-git-hub.github.io/psy-aleksander/sitemap.xml
