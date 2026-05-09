@@ -1824,3 +1824,9 @@
     display: none;
   }
 }
+
+/* Невидимый пиксель Яндекс.Метрики (noscript fallback) */
+.metrika-pixel {
+  position: absolute;
+  left: -9999px;
+}

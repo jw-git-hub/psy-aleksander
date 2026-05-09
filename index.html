@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#4A6B6A">
 
+  <!-- Yandex.Metrika -->
+  <script src="js/metrika.js" async></script>
+
   <!-- SEO мета-теги -->
   <title>Семейный психолог Александр Красногор — онлайн-консультации</title>
   <meta name="description" content="Семейный психолог Александр Красногор. Помощь при тревоге, проблемах в отношениях, выгорании. Онлайн-консультации (Zoom, Telegram, Max). Запись на бесплатную первичную консультацию.">
@@ -189,6 +192,9 @@
   </script>
 </head>
 <body>
+
+  <!-- Yandex.Metrika noscript fallback -->
+  <noscript><div><img src="https://mc.yandex.ru/watch/109129242" class="metrika-pixel" alt=""></div></noscript>
 
   <!-- ============================================
        Шапка сайта (sticky)
@@ -858,7 +864,7 @@
             <p class="pricing-card__desc">
               Индивидуальная сессия для работы с тревогой, выгоранием, низкой самооценкой, переживанием потерь, поиском смысла и другими личными запросами. На первой встрече мы знакомимся, формулируем запрос и согласуем дальнейший план работы.
             </p>
-            <a class="btn btn--accent pricing-card__btn" href="#contacts">Записаться</a>
+            <a class="btn btn--accent pricing-card__btn" href="#contacts" data-analytics="pricing_individual_anchor">Записаться</a>
           </li>
           <li class="pricing-card animate-on-scroll">
             <h3 class="pricing-card__title">Семейное консультирование</h3>
@@ -866,7 +872,7 @@
             <p class="pricing-card__desc">
               Работа с парами и семьями: разбор конфликтных ситуаций, восстановление взаимопонимания, обсуждение ролей и ожиданий. Подходит, если хочется выйти из тупика повторяющихся ссор или вместе пережить кризисный период.
             </p>
-            <a class="btn btn--accent pricing-card__btn" href="#contacts">Записаться</a>
+            <a class="btn btn--accent pricing-card__btn" href="#contacts" data-analytics="pricing_family_anchor">Записаться</a>
           </li>
         </ul>
 
@@ -1033,7 +1039,7 @@
         <ul class="contacts__list">
           <!-- Telegram (основной) -->
           <li class="contacts__item animate-on-scroll">
-            <a class="contacts__link" href="https://t.me/lex4747" target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram для записи">
+            <a class="contacts__link" href="https://t.me/lex4747" target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram для записи" data-analytics="contacts_telegram_dm">
               <span class="contacts__icon" aria-hidden="true">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.55 7.31c-.12.52-.42.65-.85.4l-2.36-1.74-1.14 1.1c-.13.13-.24.24-.48.24l.17-2.43 4.42-3.99c.19-.17-.04-.27-.3-.1L9.15 13.13 6.6 12.34c-.55-.17-.56-.55.12-.81l9.94-3.83c.46-.17.86.11.7.81z"/>
@@ -1045,7 +1051,7 @@
 
           <!-- Telegram-канал -->
           <li class="contacts__item animate-on-scroll">
-            <a class="contacts__link" href="https://t.me/domgdeslushat" target="_blank" rel="noopener noreferrer" aria-label="Открыть Telegram-канал">
+            <a class="contacts__link" href="https://t.me/domgdeslushat" target="_blank" rel="noopener noreferrer" aria-label="Открыть Telegram-канал" data-analytics="contacts_telegram_channel">
               <span class="contacts__icon" aria-hidden="true">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M3 11l18-8-3 18-7-5-3 5-1-7z"></path>
@@ -1058,7 +1064,7 @@
 
           <!-- Max — личные сообщения -->
           <li class="contacts__item animate-on-scroll">
-            <a class="contacts__link" href="https://max.ru/u/f9LHodD0cOJQvp0dbqo-AxlFudh6LeiadkkXjF6NHFX6ShGGfXY7oe2DgLU" target="_blank" rel="noopener noreferrer" aria-label="Написать в Max личным сообщением">
+            <a class="contacts__link" href="https://max.ru/u/f9LHodD0cOJQvp0dbqo-AxlFudh6LeiadkkXjF6NHFX6ShGGfXY7oe2DgLU" target="_blank" rel="noopener noreferrer" aria-label="Написать в Max личным сообщением" data-analytics="contacts_max_dm">
               <span class="contacts__icon" aria-hidden="true">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -1070,7 +1076,7 @@
 
           <!-- Max — групповой чат -->
           <li class="contacts__item animate-on-scroll">
-            <a class="contacts__link" href="https://max.ru/join/2LVnmf3RVF_O02eFcMMh_9LaDh79B4qH_W0UrdIQ9vY" target="_blank" rel="noopener noreferrer" aria-label="Присоединиться к групповому чату в Max">
+            <a class="contacts__link" href="https://max.ru/join/2LVnmf3RVF_O02eFcMMh_9LaDh79B4qH_W0UrdIQ9vY" target="_blank" rel="noopener noreferrer" aria-label="Присоединиться к групповому чату в Max" data-analytics="contacts_max_chat">
               <span class="contacts__icon" aria-hidden="true">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>

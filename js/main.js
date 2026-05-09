@@ -426,4 +426,18 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (err) {
     // sessionStorage может быть недоступен (приватный режим, отключён) — молча игнорируем
   }
+
+});
+
+/* =============================================
+   Модуль 11: Делегированный трекинг кликов через Яндекс.Метрику
+   Любой клик по элементу с data-analytics="goal_id" отправляет цель.
+   ============================================= */
+
+document.addEventListener('click', (event) => {
+  const target = event.target.closest('[data-analytics]');
+  if (!target) return;
+  const goal = target.dataset.analytics;
+  if (typeof window.ym !== 'function' || !goal) return;
+  window.ym(109129242, 'reachGoal', goal);
 });

@@ -109,3 +109,11 @@
 - **[D]** Атрибуты `width`/`height` добавлены к 4 изображениям документов по реальным пропорциям из `sips`: 3.jpg 1280×913, 4.jpg 1280×911, 2.jpg 1280×928, 1.jpg 1280×905 — устраняет CLS
 - **[E]** Установлен `cwebp` (brew install webp). Сгенерированы WebP-версии 5 файлов (q=85). Экономия: photo.jpg 94 705 → photo.webp 41 778 (−56%), 1.jpg 194 292 → 1.webp 138 766 (−29%); у 2.jpg/3.jpg/4.jpg WebP вышел немного тяжелее оригиналов (насыщенный мелкий текст дипломов — edge-case). Preload в `<head>` переключён на WebP. `<picture><source type="image/webp">` добавлен к hero, about и 4 doc-картам
 - **[E-фикс]** 2.webp и 4.webp пересжаты с `-q 75`: 2.webp 298 978 → 204 060 байт (−32% vs JPG 282 972), 4.webp 264 412 → 178 844 байт (−31% vs JPG 260 276). Оба WebP теперь легче оригиналов — `<source>` остались, файлы не удалялись
+
+### 2026-05-09 (Яндекс.Метрика — аналитика и трекинг конверсий)
+- **[АНАЛИТИКА]** Создан `js/metrika.js` — IIFE-инициализация счётчика 109129242 (webvisor, clickmap, trackLinks, accurateTrackBounce, ecommerce dataLayer); подключён в `<head>` с `async` во всех HTML-файлах (index.html и pages/privacy.html). Inline-скриптов нет — соблюдены правила CLAUDE.md
+- **[АНАЛИТИКА]** В начало `<body>` в index.html и pages/privacy.html добавлен `<noscript>`-пиксель через класс `.metrika-pixel` (position: absolute; left: -9999px) в style.css — без inline-стилей
+- **[ЦЕЛИ]** Делегированный трекинг в `js/main.js` (модуль 11): один `click`-listener на `document` покрывает все элементы с `data-analytics`; вызывает `ym(109129242, 'reachGoal', goal)`; guard `typeof window.ym === 'function'`
+- **[ЦЕЛИ]** 6 новых атрибутов `data-analytics` в index.html: `pricing_individual_anchor` (кнопка «Записаться» инд. консультация), `pricing_family_anchor` (семейное консультирование), `contacts_telegram_dm`, `contacts_telegram_channel`, `contacts_max_dm`, `contacts_max_chat`
+- **[ЦЕЛИ]** В `js/quiz.js` добавлены 2 события через `ym(..., 'reachGoal', ...)`: `quiz_started` (флаг — первое `change` в форме, один раз), `quiz_completed` (при входе в `showResult()`); в обоих guard-проверка `typeof window.ym === 'function'`
+- **[ПРАВОВОЙ]** `pages/privacy.html`: раздел 2 актуализирован (убрано «в будущем» и VK Pixel); добавлен пункт 5 «Яндекс.Метрика» с описанием Webvisor, ссылками на политику Яндекса и opt-out; прежние разделы 5–7 сдвинуты в 6–8

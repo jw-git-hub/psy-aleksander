@@ -103,6 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Сборка результата на финальном шаге */
   const showResult = () => {
+    // Цель quiz_completed — квиз пройден до конца
+    if (typeof window.ym === 'function') {
+      window.ym(109129242, 'reachGoal', 'quiz_completed');
+    }
     const data = new FormData(form);
     const obj = {
       q1: data.get('q1') || '',
@@ -118,7 +122,18 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   /* Слушатели */
-  form.addEventListener('change', render);
+
+  // Цель quiz_started — отправляем один раз при первом взаимодействии с квизом
+  let quizStartFired = false;
+  form.addEventListener('change', () => {
+    if (!quizStartFired) {
+      quizStartFired = true;
+      if (typeof window.ym === 'function') {
+        window.ym(109129242, 'reachGoal', 'quiz_started');
+      }
+    }
+    render();
+  });
 
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
