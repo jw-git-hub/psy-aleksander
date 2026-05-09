@@ -141,6 +141,7 @@
 - **[CSS]** `.sticky-cta` уже имеет `@media (min-width: 1024px) { display: none }` — на десктопе sticky-панель не появляется, дополнительных правил не потребовалось
 
 ### 2026-05-09 (Pre-show audit fix)
+- **[ФИКС]** Mobile UX: html background = footer-bg (overscroll bounce); sticky-cta padding-bottom max(spacing-sm, safe-area-inset) — без двойного отступа на iPhone X+
 - **[ФИКС]** `pages/privacy.html` стр. 57: `krasnogor-psy` → `psy-krasnogor.pro` в теге `<strong>` (правильное доменное имя)
 - **[ПРАВОВОЙ]** `pages/privacy.html` стр. 62: формулировка про формы заменена на юридически точную — квиз упомянут явно, с пояснением что данные не покидают браузер
 - **[ПЕРФ]** `js/main.js` `closeLightbox()`: `lightboxImg.src = ''` → `lightboxImg.removeAttribute('src')` — устранён паразитный GET-запрос текущей страницы при пустом src

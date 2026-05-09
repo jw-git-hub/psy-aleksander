@@ -18,6 +18,10 @@ html {
      --header-height проставляется JS, фолбэк = 4.5rem */
   scroll-padding-top: calc(var(--header-height, 4.5rem) + 1rem);
   -webkit-text-size-adjust: 100%;
+  /* Фон html в тон футеру: при overscroll-bounce на iOS/Android
+     пользователь видит тёмный фон вместо светлого —
+     нет «лишнего светлого блока» под футером */
+  background-color: var(--color-footer-bg);
 }
 
 body {
