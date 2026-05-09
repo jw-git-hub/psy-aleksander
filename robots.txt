@@ -2,5 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /pages/privacy.html
 
-# TODO: после подключения собственного домена заменить github.io на реальный
-Sitemap: https://jw-git-hub.github.io/psy-aleksander/sitemap.xml
+Sitemap: https://psy-krasnogor.pro/sitemap.xml

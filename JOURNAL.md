@@ -97,6 +97,11 @@
 - **[ПОДВАЛ]** Футер главной переработан: `footer__inner` flex-колонка на мобильных / flex-строка на 768+, добавлена `<nav class="footer__nav">` со ссылкой на политику конфиденциальности
 - **[SEO/СЕРВИСНОЕ]** Созданы `robots.txt` (Allow: /, Disallow: /pages/privacy.html, Sitemap) и `sitemap.xml` (только главная, priority 1.0); домен-плейсхолдер `https://example.com` с TODO-комментарием к замене после подключения реального домена
 
+### 2026-05-09 (подключение собственного домена)
+- **[ДОМЕН]** Создан файл `CNAME` в корне репозитория — содержит `psy-krasnogor.pro` (требование GitHub Pages для кастомного домена)
+- **[SEO]** Заменены все 6 вхождений `https://jw-git-hub.github.io/psy-aleksander` на `https://psy-krasnogor.pro` в `index.html`: canonical, og:url, og:image, twitter:image, JSON-LD url, JSON-LD image
+- **[SEO/СЕРВИСНОЕ]** В `robots.txt` и `sitemap.xml` обновлены URL на `psy-krasnogor.pro`; удалены TODO-комментарии о необходимости замены домена
+
 ### 2026-05-09 (SEO-пакет A–E)
 - **[A]** Удалён мёртвый `<meta name="keywords">` — тег игнорируется Google и Яндексом с 2009 г.
 - **[B]** `priceRange` в JSON-LD исправлен с нестандартного «от 3500 ₽» на символьный `"$$"` (Schema.org-стандарт)
