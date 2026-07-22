@@ -63,6 +63,39 @@ button:focus-visible,
   border-radius: var(--radius-sm);
 }
 
+/* На тёмных секциях тёмная медь в обводке почти сливается с фоном (1.71:1),
+   а индикатор фокуса обязан различаться. Берём светлую пару акцента. */
+.contacts :focus-visible,
+.footer :focus-visible {
+  outline-color: var(--color-accent-on-dark);
+}
+
+/* --- Пропуск навигации ---
+   Уводится за верхний край, выезжает при получении фокуса с клавиатуры.
+   Не .visually-hidden: ссылка должна становиться видимой, а не только читаемой. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: var(--container-padding);
+  z-index: calc(var(--z-nav-mobile) + 20);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  font-weight: 600;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  transform: translateY(-110%);
+  transition: transform var(--transition-base);
+}
+
+/* И :focus, и :focus-visible: до этой ссылки добираются только с клавиатуры,
+   а на программный фокус (скринридер, переход по якорю) :focus-visible
+   в Chrome не срабатывает — ссылка осталась бы за краем экрана. */
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  color: var(--color-white);
+}
+
 /* --- Утилиты --- */
 .visually-hidden {
   position: absolute;
@@ -76,25 +109,22 @@ button:focus-visible,
   border: 0;
 }
 
-/* --- Анимация появления при скролле (управляется JS через .is-visible) --- */
-.animate-on-scroll {
+/* --- Анимация появления при скролле (управляется JS через .is-visible) ---
+   Селектор с .js: без работающего скрипта класс .is-visible никто не проставит,
+   и элементы навсегда остались бы с opacity: 0.
+   Каскадную задержку выдаёт JS через transition-delay — по порядку реального
+   появления во вьюпорте. Раньше она шла от :nth-child, но тот считает позицию
+   в родителе, а не в группе появления, и давал случайный разброс. */
+.js .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.animate-on-scroll.is-visible {
+.js .animate-on-scroll.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
-
-/* Каскадная задержка появления для соседних элементов */
-.animate-on-scroll:nth-child(2) { transition-delay: 0.08s; }
-.animate-on-scroll:nth-child(3) { transition-delay: 0.16s; }
-.animate-on-scroll:nth-child(4) { transition-delay: 0.24s; }
-.animate-on-scroll:nth-child(5) { transition-delay: 0.32s; }
-.animate-on-scroll:nth-child(6) { transition-delay: 0.40s; }
-.animate-on-scroll:nth-child(7) { transition-delay: 0.48s; }
 
 /* --- Уважение к настройке prefers-reduced-motion ---
    Отключаем все наши декоративные анимации */
@@ -103,7 +133,9 @@ button:focus-visible,
     scroll-behavior: auto;
   }
 
-  .animate-on-scroll {
+  /* .js в селекторе — чтобы перебить .js .animate-on-scroll выше:
+     у того специфичность (0,2,0), у голого класса была бы (0,1,0) */
+  .js .animate-on-scroll {
     opacity: 1;
     transform: none;
     transition: none;

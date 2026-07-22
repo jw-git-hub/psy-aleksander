@@ -64,20 +64,15 @@
   min-height: 60px;
 }
 
-/* --- CTA-кнопка в шапке (mobile-first: компактная версия) --- */
-.header__cta {
-  display: inline-flex;
-  /* Компактный мобильный вариант — короткий padding и уменьшенный шрифт */
-  padding: 0.5rem 0.875rem;
-  font-size: var(--fs-small);
+/* --- CTA-кнопка в шапке — только десктоп ---
+   На мобильном шапка остаётся «логотип + бургер»: кнопка теснила имя
+   психолога и ломала его на две строки. Её роль там играют кнопка
+   в бургер-меню и sticky-CTA внизу экрана.
+   Селектор с .header нужен, чтобы перебить `.btn { display: inline-block }`,
+   объявленный ниже по файлу с такой же специфичностью. */
+.header .header__cta {
+  display: none;
   white-space: nowrap;
-}
-
-/* Скрытие CTA шапки через JS, когда активна sticky-CTA внизу.
-   !important нужен, чтобы перебить desktop-правило .header__cta { display: inline-block }
-   в @media (min-width: 1024px) с той же специфичностью (0,1,0) */
-.header__cta--hidden {
-  display: none !important;
 }
 
 /* --- Логотип --- */
@@ -124,8 +119,12 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  position: relative;
   flex-shrink: 0;
+  /* .nav — потомок .header и с z-index 110 перекрывала бы бургер:
+     z-index шапки тут не помогает, они в одном контексте наложения.
+     Поднимаем сам бургер, иначе крестик «закрыть» уходит под панель меню. */
+  position: relative;
+  z-index: calc(var(--z-nav-mobile) + 1);
 }
 
 .burger__line {
@@ -152,13 +151,20 @@
 .nav {
   position: fixed;
   inset: 0 0 0 auto;
-  width: min(80vw, 320px);
+  width: min(86vw, 340px);
   background-color: var(--color-white);
-  padding: calc(var(--spacing-xxl) + var(--spacing-sm)) var(--spacing-lg) var(--spacing-lg);
+  /* Верхний отступ = высота шапки + воздух: пункты не уезжают под логотип.
+     Нижний — с учётом системной панели жестов на iOS. */
+  padding: calc(var(--header-height, 60px) + var(--spacing-sm)) var(--spacing-lg)
+           calc(var(--spacing-md) + env(safe-area-inset-bottom));
   transform: translateX(100%);
   transition: transform var(--transition-base);
   z-index: var(--z-nav-mobile);
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08);
+  /* Меню с блоком записи и контактов может не поместиться
+     на низких экранах — разрешаем прокрутку внутри панели */
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .nav--open {
@@ -168,11 +174,14 @@
 .nav__list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  /* 8px между пунктами: сами пункты ~48px высотой, суммарный шаг ~56px —
+     хватает и для пальца, и чтобы блок записи поместился без прокрутки */
+  gap: var(--spacing-xs);
 }
 
 .nav__link {
-  display: inline-block;
+  /* block, а не inline-block: тап срабатывает по всей ширине панели */
+  display: block;
   font-size: 1.125rem;
   font-weight: 500;
   color: var(--color-primary);
@@ -183,6 +192,76 @@
 .nav__link:hover,
 .nav__link.is-active {
   color: var(--color-accent);
+}
+
+/* --- Блок записи и контактов в мобильном меню --- */
+.nav__footer {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.nav__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  min-height: 52px;
+  padding: 0.75rem var(--spacing-md);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: var(--fs-btn);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-btn);
+  transition: background-color var(--transition-base);
+}
+
+.nav__cta:hover {
+  background-color: var(--color-accent-hover);
+  color: var(--color-white);
+}
+
+.nav__cta-icon {
+  flex-shrink: 0;
+}
+
+.nav__hint {
+  margin-top: var(--spacing-xs);
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  text-align: center;
+}
+
+.nav__contacts-title {
+  margin-top: var(--spacing-md);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+}
+
+.nav__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.nav__contact {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-height: 44px;
+  font-size: var(--fs-small);
+  color: var(--color-primary);
+}
+
+.nav__contact-icon {
+  flex-shrink: 0;
+  color: var(--color-primary-light);
 }
 
 /* Затемнение фона за открытым мобильным меню */
@@ -267,8 +346,8 @@
   align-items: center;
   padding: var(--spacing-xl) 0 calc(var(--spacing-xl) + var(--spacing-md));
   background:
-    radial-gradient(ellipse at top right, rgba(192, 139, 92, 0.08), transparent 60%),
-    radial-gradient(ellipse at bottom left, rgba(74, 107, 106, 0.08), transparent 55%),
+    radial-gradient(ellipse at top right, rgba(var(--color-accent-rgb), 0.08), transparent 60%),
+    radial-gradient(ellipse at bottom left, rgba(var(--color-primary-rgb), 0.08), transparent 55%),
     linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
 }
 
@@ -1259,7 +1338,7 @@
 
 .contacts__link:hover {
   transform: translateY(-4px);
-  color: var(--color-accent);
+  color: var(--color-accent-on-dark);
 }
 
 .contacts__icon {
@@ -1274,7 +1353,7 @@
 }
 
 .contacts__link:hover .contacts__icon {
-  background-color: rgba(192, 139, 92, 0.2);
+  background-color: rgba(var(--color-accent-rgb), 0.2);
 }
 
 .contacts__label {
@@ -1317,6 +1396,10 @@
 }
 
 .footer__link {
+  /* inline-flex + min-height: ссылка была 24px в высоту при минимуме 44px */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: rgba(250, 248, 245, 0.7);
   font-size: var(--fs-small);
   text-decoration: underline;
@@ -1325,7 +1408,7 @@
 }
 
 .footer__link:hover {
-  color: var(--color-accent);
+  color: var(--color-accent-on-dark);
 }
 
 @media (min-width: 768px) {
@@ -1390,7 +1473,9 @@
   min-height: 48px;
   padding: var(--spacing-sm) var(--spacing-md);
   background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
+  /* Границу здесь видно не для красоты — она очерчивает выбираемую опцию,
+     поэтому нужен «сильный» токен с 3:1 к фону */
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: border-color var(--transition-base), background-color var(--transition-base);
@@ -1441,7 +1526,13 @@
 }
 
 .quiz__nav-btn {
-  /* Перебиваем .btn padding для маленькой кнопки квиза */
+  /* Перебиваем .btn padding для маленькой кнопки квиза.
+     min-height 44px — минимум WCAG для тач-цели: одного padding не хватало,
+     кнопка выходила 38px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   padding: 0.625rem 1.25rem;
   font-size: var(--fs-small);
 }
@@ -1655,12 +1746,23 @@
     background: transparent;
     transform: none;
     box-shadow: none;
+    overflow: visible;
     order: 2;
+  }
+
+  /* Запись и контакты нужны только в мобильном меню:
+     на десктопе есть CTA в шапке и секция «Контакты» */
+  .nav__footer {
+    display: none;
   }
 
   .nav__list {
     flex-direction: row;
     gap: var(--spacing-md);
+  }
+
+  .nav__link {
+    display: inline-block;
   }
 
   .nav__link {
@@ -1698,8 +1800,8 @@
     min-height: 72px;
   }
 
-  /* --- CTA-кнопка в шапке (на мобильном скрыта — есть sticky-bar) --- */
-  .header__cta {
+  /* --- CTA-кнопка в шапке: появляется только с десктопа --- */
+  .header .header__cta {
     display: inline-block;
     padding: 0.5rem 1.25rem;
     font-size: var(--fs-small);
@@ -1767,15 +1869,21 @@
   background-color: var(--color-bg);
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
   transform: translateY(120%);
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  /* visibility в переходе — чтобы скрытая панель уходила из порядка Tab:
+     одних opacity/pointer-events мало, фокус попадал бы на невидимую кнопку
+     (при этом на ней стоит aria-hidden — скринридер её не озвучит) */
+  transition: transform var(--transition-base), opacity var(--transition-base),
+              visibility var(--transition-base);
   pointer-events: none;
   opacity: 0;
+  visibility: hidden;
 }
 
 .sticky-cta.is-visible {
   transform: translateY(0);
   pointer-events: auto;
   opacity: 1;
+  visibility: visible;
 }
 
 .sticky-cta__link {

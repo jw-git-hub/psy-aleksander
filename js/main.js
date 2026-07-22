@@ -87,6 +87,18 @@ document.addEventListener('DOMContentLoaded', () => {
     navBackdrop.addEventListener('click', closeMenu);
   }
 
+  // Клик по внешней ссылке в меню (запись, мессенджеры) — тоже закрываем.
+  // Якоря закрывают меню в модуле smooth scroll, а внешние ссылки открываются
+  // в новой вкладке: без этого меню и блокировка скролла остались бы висеть.
+  if (nav) {
+    nav.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href]');
+      if (!link) return;
+      if (link.getAttribute('href').startsWith('#')) return;
+      closeMenu();
+    });
+  }
+
   // Инициализация и реакция на ресайз окна
   syncNavInert();
   window.addEventListener('resize', syncNavInert);
@@ -168,14 +180,26 @@ document.addEventListener('DOMContentLoaded', () => {
      ============================================= */
   const animatedElements = document.querySelectorAll('.animate-on-scroll');
 
+  // Шаг каскада и его потолок: дальше 5-го элемента задержка не растёт,
+  // иначе низ длинной секции проявляется заметно позже верха
+  const STAGGER_STEP_SEC = 0.08;
+  const STAGGER_MAX_STEPS = 5;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   if ('IntersectionObserver' in window && animatedElements.length > 0) {
     const animationObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+      // Каскад считаем по элементам, попавшим во вьюпорт одной пачкой,
+      // а не по позиции в DOM — так задержка отражает порядок появления
+      entries
+        .filter((entry) => entry.isIntersecting)
+        .forEach((entry, index) => {
+          if (!prefersReducedMotion) {
+            const steps = Math.min(index, STAGGER_MAX_STEPS);
+            entry.target.style.transitionDelay = `${steps * STAGGER_STEP_SEC}s`;
+          }
           entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
-        }
-      });
+        });
     }, {
       threshold: 0.15,
       rootMargin: '0px 0px -40px 0px'
@@ -356,8 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const stickyCta = document.getElementById('sticky-cta');
   const heroSection = document.querySelector('.hero');
   const footerEl = document.querySelector('.footer');
-  // Кнопка в шапке — скрывается, когда sticky-CTA активна, и возвращается обратно
-  const headerCta = document.querySelector('.header__cta');
 
   if (stickyCta && heroSection) {
     let scheduled = false;
@@ -369,8 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (document.body.classList.contains('is-locked')) {
         stickyCta.classList.remove('is-visible');
         stickyCta.setAttribute('aria-hidden', 'true');
-        // is-locked = shouldShow false → класс --hidden убираем
-        if (headerCta) headerCta.classList.remove('header__cta--hidden');
         return;
       }
 
@@ -387,12 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         stickyCta.classList.remove('is-visible');
         stickyCta.setAttribute('aria-hidden', 'true');
-      }
-
-      // Синхронизируем видимость CTA в шапке:
-      // когда sticky-CTA показана — кнопку в шапке скрываем, и наоборот
-      if (headerCta) {
-        headerCta.classList.toggle('header__cta--hidden', shouldShow);
       }
     };
 
