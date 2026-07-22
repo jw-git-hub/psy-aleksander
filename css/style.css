@@ -489,6 +489,28 @@
 }
 
 /* =============================================
+   Коротко — выжимка фактов под первым экраном
+   ============================================= */
+
+.summary {
+  padding-top: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  background-color: var(--color-bg-alt);
+}
+
+.summary__text {
+  max-width: 46rem;
+  margin: 0 auto;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.summary__text + .summary__text {
+  margin-top: var(--spacing-sm);
+}
+
+/* =============================================
    Signs — «Если узнаёте себя»
    ============================================= */
 .signs__list {

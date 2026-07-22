@@ -71,6 +71,11 @@ expect_count index.html '<details class="faq-card' 10 'в FAQ десять во�
 expect_count index.html '"@type": "Question"' 10 'в FAQPage десять вопросов'
 expect_absent index.html 'Все консультации проходят онлайн' 'формулировка «только онлайн» убрана'
 
+section 'Блок-суммари'
+expect_present index.html 'id="summary"' 'секция-суммари есть'
+expect_present index.html 'в&nbsp;профессии с 2016 года' 'указан стаж'
+expect_present index.html 'КПТ, гештальт-терапии, ЭФТ' 'перечислены методы'
+
 section 'Соответствие FAQ и разметки'
 if node tools/check-faq-sync.mjs index.html; then
   pass 'видимый FAQ и FAQPage совпадают по порядку и текстам'
