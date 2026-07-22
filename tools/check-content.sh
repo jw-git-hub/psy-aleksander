@@ -65,6 +65,12 @@ expect_present index.html 'Самуи' 'очный формат упомянут
 expect_present index.html 'UTC+7' 'часовой пояс Самуи указан'
 expect_present index.html 'МСК' 'пересчёт в московское время указан'
 
+section 'FAQ'
+expect_present index.html 'Можно ли прийти на консультацию очно?' 'вопрос об очном приёме есть'
+expect_count index.html '<details class="faq-card' 10 'в FAQ десять вопросов'
+expect_count index.html '"@type": "Question"' 10 'в FAQPage десять вопросов'
+expect_absent index.html 'Все консультации проходят онлайн' 'формулировка «только онлайн» убрана'
+
 section 'JSON-LD'
 if node tools/check-jsonld.mjs index.html; then
   pass 'все блоки JSON-LD валидны'
