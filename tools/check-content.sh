@@ -73,7 +73,8 @@ expect_absent index.html 'Все консультации проходят он�
 
 section 'Schema.org'
 expect_count index.html '<script type="application/ld+json">' 1 'ровно один блок JSON-LD'
-expect_present index.html '"@graph"' 'разметка собрана в граф'
+expect_present index.html '"@id": "https://psy-krasnogor.pro/#person"' 'узел Person адресуем по @id'
+expect_present index.html '"founder": { "@id": "https://psy-krasnogor.pro/#person" }' 'практика связана с персоной'
 expect_present index.html '"hasCredential"' 'квалификации размечены'
 expect_present index.html '"alumniOf"' 'вуз размечен'
 expect_present index.html '"knowsAbout"' 'темы и методы размечены'
@@ -84,6 +85,8 @@ expect_present index.html '"priceCurrency": "THB"' 'цены в батах ра�
 expect_absent index.html '"LocalBusiness"' 'комбинированный тип убран'
 expect_absent index.html '"priceRange"' 'бессодержательный priceRange убран'
 expect_absent index.html '"addressCountry": "RU"' 'неверная страна убрана'
+expect_absent index.html '"price": "3500"' 'устаревшая цена ушла из разметки'
+expect_count index.html '"@type": "Offer"' 5 'пять офферов'
 
 section 'Метатеги'
 expect_present index.html '<title>Семейный психолог Александр Красногор — онлайн и Самуи</title>' 'title обновлён'

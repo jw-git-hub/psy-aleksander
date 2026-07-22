@@ -138,6 +138,7 @@
             "name": "Практический психолог. Психолог-консультант, 1640 часов",
             "credentialCategory": "Диплом о профессиональной переподготовке",
             "dateCreated": "2025",
+            "temporalCoverage": "2024/2025",
             "recognizedBy": {
               "@type": "EducationalOrganization",
               "name": "АНО ДПО «Институт прикладной психологии в социальной сфере»"
@@ -174,7 +175,7 @@
         "name": "Психологическое консультирование — Александр Красногор",
         "url": "https://psy-krasnogor.pro/",
         "image": "https://psy-krasnogor.pro/img/photo.jpg",
-        "provider": { "@id": "https://psy-krasnogor.pro/#person" },
+        "founder": { "@id": "https://psy-krasnogor.pro/#person" },
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Ко Самуи",
@@ -182,7 +183,44 @@
           "addressCountry": "TH"
         },
         "areaServed": [
-          { "@type": "Place", "name": "Ко Самуи, Таиланд" },
+          { "@id": "https://psy-krasnogor.pro/#place-samui" },
+          { "@type": "Country", "name": "Россия" }
+        ],
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "20:00"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Услуги",
+          "itemListElement": [
+            { "@id": "https://psy-krasnogor.pro/#service-individual" },
+            { "@id": "https://psy-krasnogor.pro/#service-family" }
+          ]
+        }
+      },
+      {
+        "@type": "Place",
+        "@id": "https://psy-krasnogor.pro/#place-samui",
+        "name": "Ко Самуи, Таиланд",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ко Самуи",
+          "addressRegion": "Surat Thani",
+          "addressCountry": "TH"
+        }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://psy-krasnogor.pro/#service-individual",
+        "name": "Консультация психолога",
+        "serviceType": "Психологическое консультирование",
+        "description": "Индивидуальная сессия 40–60 минут: тревога, выгорание, низкая самооценка, переживание потерь, поиск смысла и другие личные запросы.",
+        "provider": { "@id": "https://psy-krasnogor.pro/#person" },
+        "areaServed": [
+          { "@id": "https://psy-krasnogor.pro/#place-samui" },
           { "@type": "Country", "name": "Россия" }
         ],
         "availableChannel": [
@@ -204,45 +242,11 @@
           {
             "@type": "ServiceChannel",
             "name": "Очный приём на о. Самуи",
-            "serviceLocation": {
-              "@type": "Place",
-              "name": "Ко Самуи, Таиланд",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Ко Самуи",
-                "addressRegion": "Surat Thani",
-                "addressCountry": "TH"
-              }
-            }
+            "serviceLocation": { "@id": "https://psy-krasnogor.pro/#place-samui" }
           }
         ],
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "20:00"
-        },
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Услуги",
-          "itemListElement": [
-            { "@id": "https://psy-krasnogor.pro/#service-individual" },
-            { "@id": "https://psy-krasnogor.pro/#service-family" }
-          ]
-        }
-      },
-      {
-        "@type": "Service",
-        "@id": "https://psy-krasnogor.pro/#service-individual",
-        "name": "Консультация психолога",
-        "serviceType": "Психологическое консультирование",
-        "description": "Индивидуальная сессия 40–60 минут: тревога, выгорание, низкая самооценка, переживание потерь, поиск смысла и другие личные запросы.",
-        "provider": { "@id": "https://psy-krasnogor.pro/#person" },
-        "areaServed": [
-          { "@type": "Place", "name": "Ко Самуи, Таиланд" },
-          { "@type": "Country", "name": "Россия" }
-        ],
         "offers": [
+          { "@id": "https://psy-krasnogor.pro/#offer-intro" },
           { "@id": "https://psy-krasnogor.pro/#offer-individual-online" },
           { "@id": "https://psy-krasnogor.pro/#offer-individual-samui" }
         ]
@@ -255,8 +259,30 @@
         "description": "Работа с парами и семьями 90–120 минут: конфликты, взаимопонимание, роли и ожидания, кризисные периоды.",
         "provider": { "@id": "https://psy-krasnogor.pro/#person" },
         "areaServed": [
-          { "@type": "Place", "name": "Ко Самуи, Таиланд" },
+          { "@id": "https://psy-krasnogor.pro/#place-samui" },
           { "@type": "Country", "name": "Россия" }
+        ],
+        "availableChannel": [
+          {
+            "@type": "ServiceChannel",
+            "name": "Онлайн — Zoom",
+            "serviceUrl": "https://psy-krasnogor.pro/#contacts"
+          },
+          {
+            "@type": "ServiceChannel",
+            "name": "Онлайн — Telegram",
+            "serviceUrl": "https://t.me/lex4747"
+          },
+          {
+            "@type": "ServiceChannel",
+            "name": "Онлайн — Max",
+            "serviceUrl": "https://max.ru/u/f9LHodD0cOJQvp0dbqo-AxlFudh6LeiadkkXjF6NHFX6ShGGfXY7oe2DgLU"
+          },
+          {
+            "@type": "ServiceChannel",
+            "name": "Очный приём на о. Самуи",
+            "serviceLocation": { "@id": "https://psy-krasnogor.pro/#place-samui" }
+          }
         ],
         "offers": [
           { "@id": "https://psy-krasnogor.pro/#offer-family-online" },
