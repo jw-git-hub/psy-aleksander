@@ -110,6 +110,12 @@ else
   fail 'FAQ и FAQPage разошлись'
 fi
 
+section 'Сквозная консистентность'
+expect_absent index.html '3500' 'нигде не осталось старой цены'
+expect_absent index.html 'от 5000' 'цены указаны без приставки «от»'
+expect_absent llms.txt '3500' 'в llms.txt нет старой цены'
+expect_present index.html 'Александр Красногор' 'полное имя на странице'
+
 section 'Техфайлы'
 expect_present robots.txt 'User-agent: GPTBot' 'GPTBot разрешён явно'
 expect_present robots.txt 'User-agent: ClaudeBot' 'ClaudeBot разрешён явно'
