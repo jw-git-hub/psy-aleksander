@@ -12,16 +12,19 @@ section() { printf '\n%s\n' "$1"; }
 
 # Подстрока обязана присутствовать в файле
 expect_present() {
+  if [ ! -f "$1" ]; then fail "$3 (файл $1 не найден)"; return; fi
   if grep -qF -- "$2" "$1"; then pass "$3"; else fail "$3 (нет в $1: «$2»)"; fi
 }
 
 # Подстроки быть не должно
 expect_absent() {
+  if [ ! -f "$1" ]; then fail "$3 (файл $1 не найден)"; return; fi
   if grep -qF -- "$2" "$1"; then fail "$3 (всё ещё в $1: «$2»)"; else pass "$3"; fi
 }
 
 # Точное число вхождений
 expect_count() {
+  if [ ! -f "$1" ]; then fail "$4 (файл $1 не найден)"; return; fi
   local actual
   actual=$(grep -oF -- "$2" "$1" | wc -l | tr -d ' ')
   if [ "$actual" = "$3" ]; then pass "$4"; else fail "$4 (ожидалось $3, найдено $actual)"; fi
