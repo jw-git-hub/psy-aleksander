@@ -63,155 +63,333 @@
   <script src="js/main.js" defer></script>
   <script src="js/quiz.js" defer></script>
 
-  <!-- JSON-LD: LocalBusiness + Person -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "Person"],
-    "name": "Александр Красногор",
-    "jobTitle": "Семейный психолог",
-    "description": "Семейный психолог. Онлайн-консультации при тревоге, проблемах в отношениях, эмоциональном выгорании. КПТ, гештальт-терапия, ЭФТ.",
-    "url": "https://psy-krasnogor.pro/",
-    "image": "https://psy-krasnogor.pro/img/photo.jpg",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "RU"
-    },
-    "priceRange": "$$",
-    "openingHours": "Mo-Fr 09:00-20:00",
-    "areaServed": "RU",
-    "serviceType": "Online psychotherapy",
-    "sameAs": [
-      "https://t.me/lex4747",
-      "https://t.me/domgdeslushat",
-      "https://max.ru/u/f9LHodD0cOJQvp0dbqo-AxlFudh6LeiadkkXjF6NHFX6ShGGfXY7oe2DgLU",
-      "https://max.ru/join/2LVnmf3RVF_O02eFcMMh_9LaDh79B4qH_W0UrdIQ9vY"
-    ]
-  }
-  </script>
-
-  <!-- JSON-LD: FAQPage -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Сколько длится консультация?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Индивидуальная сессия длится 40–60 минут, работа с парой или семьёй — 90–120 минут."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Как записаться на консультацию?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Записаться можно через Telegram: @lex4747 или через Max. Александр отвечает лично, обычно в течение дня. Приём Пн–Пт, 9:00–20:00 по времени Самуи (UTC+7) — это 5:00–16:00 МСК."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Сколько стоит консультация?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Индивидуальная консультация — 5000 ₽ онлайн или 2500 бат очно на Самуи. Работа с парой — 10 000 ₽ онлайн или 5000 бат очно. Первая встреча-знакомство 20 минут — бесплатно."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "В каком формате проходят консультации?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Консультации проходят онлайн или очно — на ваш выбор. Онлайн — через Zoom, Telegram или Max; очно — на острове Самуи в Таиланде."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Соблюдается ли конфиденциальность?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Да, всё, что обсуждается на сессии, остаётся между нами. Полная конфиденциальность гарантирована."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Я никогда не был у психолога. Это не стыдно?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Нет. К психологу всё чаще обращаются не в крайнем случае, а чтобы разобраться раньше, чем станет хуже. Первая встреча — знакомство 20 минут, бесплатно: ничего не обязывает и помогает понять, подходим ли мы друг другу."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Как понять, что мне нужен психолог, а не психиатр?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Если есть подозрение на клиническое состояние — тяжёлая депрессия, биполярное расстройство, выраженная тревога с соматикой — нужна консультация врача-психиатра. На первой встрече я помогу определиться. Если случай не для меня — честно скажу и порекомендую профильного коллегу."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "А вдруг психолог не поможет — я просто потеряю время?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Психотерапия — это совместная работа, и её эффективность во многом зависит от контакта со специалистом. Поэтому первая встреча 20 минут бесплатна — чтобы вы могли проверить, подходим ли мы друг другу. Если нет — ничего не теряете."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Что если партнёр против парной терапии?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Часто полезнее начать индивидуально: разобраться со своей частью и через это — повлиять на отношения. Многие пары приходят к совместной работе позже, когда видят изменения в партнёре, который уже работает с психологом."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Можно ли прийти на консультацию очно?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Да. Александр Красногор принимает очно на острове Самуи в Таиланде — место встречи согласуем в переписке. Очная сессия стоит 2500 бат индивидуально и 5000 бат для пары. Если вы не на Самуи, остаётся онлайн-формат: Zoom, Telegram или Max."
-        }
-      }
-    ]
-  }
-  </script>
-
-  <!-- JSON-LD: Service (две услуги) -->
+  <!-- JSON-LD: связный граф — специалист, практика, услуги, офферы, FAQ -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Service",
-        "name": "Консультация психолога",
-        "provider": {
-          "@type": "Person",
-          "name": "Александр Красногор"
+        "@type": "WebSite",
+        "@id": "https://psy-krasnogor.pro/#website",
+        "url": "https://psy-krasnogor.pro/",
+        "name": "Александр Красногор — семейный психолог",
+        "inLanguage": "ru",
+        "publisher": { "@id": "https://psy-krasnogor.pro/#person" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://psy-krasnogor.pro/#webpage",
+        "url": "https://psy-krasnogor.pro/",
+        "name": "Семейный психолог Александр Красногор — онлайн и Самуи",
+        "description": "Семейный психолог Александр Красногор: тревога, отношения, выгорание. Онлайн (Zoom, Telegram, Max) и очно на о. Самуи.",
+        "inLanguage": "ru",
+        "isPartOf": { "@id": "https://psy-krasnogor.pro/#website" },
+        "about": { "@id": "https://psy-krasnogor.pro/#person" },
+        "primaryImageOfPage": "https://psy-krasnogor.pro/img/photo.jpg"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://psy-krasnogor.pro/#person",
+        "name": "Александр Красногор",
+        "jobTitle": "Семейный психолог",
+        "url": "https://psy-krasnogor.pro/",
+        "image": "https://psy-krasnogor.pro/img/photo.jpg",
+        "description": "Семейный психолог. Консультирует онлайн (Zoom, Telegram, Max) и очно на острове Самуи в Таиланде. Работает с тревогой, отношениями, выгоранием, самооценкой и кризисами.",
+        "knowsLanguage": "ru",
+        "knowsAbout": [
+          "Тревога и страхи",
+          "Отношения и близость",
+          "Эмоциональное выгорание",
+          "Самооценка и уверенность",
+          "Кризисы и потери",
+          "Поиск себя и смысла",
+          "Когнитивно-поведенческая терапия",
+          "Гештальт-терапия",
+          "Эмоционально-фокусированная терапия",
+          "Практики осознанности (mindfulness)"
+        ],
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Московский гуманитарный институт имени Е. Р. Дашковой"
         },
-        "description": "Индивидуальная психологическая консультация при тревоге, выгорании, низкой самооценке и других запросах.",
-        "offers": {
-          "@type": "Offer",
-          "price": "3500",
-          "priceCurrency": "RUB"
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Бакалавр по направлению «Психология» (37.03.01)",
+            "credentialCategory": "Диплом бакалавра",
+            "dateCreated": "2016",
+            "recognizedBy": {
+              "@type": "EducationalOrganization",
+              "name": "Московский гуманитарный институт имени Е. Р. Дашковой"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Психологическое консультирование и психодиагностика, 620 часов",
+            "credentialCategory": "Диплом о профессиональной переподготовке",
+            "dateCreated": "2023",
+            "recognizedBy": {
+              "@type": "EducationalOrganization",
+              "name": "АНО «НИИДПО»"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Практический психолог. Психолог-консультант, 1640 часов",
+            "credentialCategory": "Диплом о профессиональной переподготовке",
+            "dateCreated": "2025",
+            "recognizedBy": {
+              "@type": "EducationalOrganization",
+              "name": "АНО ДПО «Институт прикладной психологии в социальной сфере»"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Метод когнитивно-поведенческой терапии (КПТ) в работе с преодолением тревожности и страхов, 200 часов",
+            "credentialCategory": "Удостоверение о повышении квалификации",
+            "dateCreated": "2025",
+            "recognizedBy": {
+              "@type": "EducationalOrganization",
+              "name": "АНО ДПО «Институт прикладной психологии в социальной сфере»"
+            }
+          }
+        ],
+        "makesOffer": [
+          { "@id": "https://psy-krasnogor.pro/#offer-intro" },
+          { "@id": "https://psy-krasnogor.pro/#offer-individual-online" },
+          { "@id": "https://psy-krasnogor.pro/#offer-individual-samui" },
+          { "@id": "https://psy-krasnogor.pro/#offer-family-online" },
+          { "@id": "https://psy-krasnogor.pro/#offer-family-samui" }
+        ],
+        "sameAs": [
+          "https://t.me/lex4747",
+          "https://t.me/domgdeslushat",
+          "https://max.ru/u/f9LHodD0cOJQvp0dbqo-AxlFudh6LeiadkkXjF6NHFX6ShGGfXY7oe2DgLU",
+          "https://max.ru/join/2LVnmf3RVF_O02eFcMMh_9LaDh79B4qH_W0UrdIQ9vY"
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://psy-krasnogor.pro/#practice",
+        "name": "Психологическое консультирование — Александр Красногор",
+        "url": "https://psy-krasnogor.pro/",
+        "image": "https://psy-krasnogor.pro/img/photo.jpg",
+        "provider": { "@id": "https://psy-krasnogor.pro/#person" },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ко Самуи",
+          "addressRegion": "Surat Thani",
+          "addressCountry": "TH"
+        },
+        "areaServed": [
+          { "@type": "Place", "name": "Ко Самуи, Таиланд" },
+          { "@type": "Country", "name": "Россия" }
+        ],
+        "availableChannel": [
+          {
+            "@type": "ServiceChannel",
+            "name": "Онлайн — Zoom",
+            "serviceUrl": "https://psy-krasnogor.pro/#contacts"
+          },
+          {
+            "@type": "ServiceChannel",
+            "name": "Онлайн — Telegram",
+            "serviceUrl": "https://t.me/lex4747"
+          },
+          {
+            "@type": "ServiceChannel",
+            "name": "Онлайн — Max",
+            "serviceUrl": "https://max.ru/u/f9LHodD0cOJQvp0dbqo-AxlFudh6LeiadkkXjF6NHFX6ShGGfXY7oe2DgLU"
+          },
+          {
+            "@type": "ServiceChannel",
+            "name": "Очный приём на о. Самуи",
+            "serviceLocation": {
+              "@type": "Place",
+              "name": "Ко Самуи, Таиланд",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Ко Самуи",
+                "addressRegion": "Surat Thani",
+                "addressCountry": "TH"
+              }
+            }
+          }
+        ],
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "20:00"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Услуги",
+          "itemListElement": [
+            { "@id": "https://psy-krasnogor.pro/#service-individual" },
+            { "@id": "https://psy-krasnogor.pro/#service-family" }
+          ]
         }
       },
       {
         "@type": "Service",
-        "name": "Семейное психологическое консультирование",
-        "provider": {
-          "@type": "Person",
-          "name": "Александр Красногор"
-        },
-        "description": "Консультирование пар и семей по вопросам отношений, конфликтов и взаимопонимания.",
-        "offers": {
-          "@type": "Offer",
-          "price": "3500",
-          "priceCurrency": "RUB"
-        }
+        "@id": "https://psy-krasnogor.pro/#service-individual",
+        "name": "Консультация психолога",
+        "serviceType": "Психологическое консультирование",
+        "description": "Индивидуальная сессия 40–60 минут: тревога, выгорание, низкая самооценка, переживание потерь, поиск смысла и другие личные запросы.",
+        "provider": { "@id": "https://psy-krasnogor.pro/#person" },
+        "areaServed": [
+          { "@type": "Place", "name": "Ко Самуи, Таиланд" },
+          { "@type": "Country", "name": "Россия" }
+        ],
+        "offers": [
+          { "@id": "https://psy-krasnogor.pro/#offer-individual-online" },
+          { "@id": "https://psy-krasnogor.pro/#offer-individual-samui" }
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://psy-krasnogor.pro/#service-family",
+        "name": "Семейное консультирование",
+        "serviceType": "Семейное психологическое консультирование",
+        "description": "Работа с парами и семьями 90–120 минут: конфликты, взаимопонимание, роли и ожидания, кризисные периоды.",
+        "provider": { "@id": "https://psy-krasnogor.pro/#person" },
+        "areaServed": [
+          { "@type": "Place", "name": "Ко Самуи, Таиланд" },
+          { "@type": "Country", "name": "Россия" }
+        ],
+        "offers": [
+          { "@id": "https://psy-krasnogor.pro/#offer-family-online" },
+          { "@id": "https://psy-krasnogor.pro/#offer-family-samui" }
+        ]
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://psy-krasnogor.pro/#offer-intro",
+        "name": "Первая встреча-знакомство, 20 минут",
+        "description": "Знакомство и обсуждение запроса. Без обязательств продолжать.",
+        "price": "0",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://psy-krasnogor.pro/#offer-individual-online",
+        "name": "Индивидуальная консультация онлайн, 40–60 минут",
+        "price": "5000",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://psy-krasnogor.pro/#offer-individual-samui",
+        "name": "Индивидуальная консультация очно на о. Самуи, 40–60 минут",
+        "price": "2500",
+        "priceCurrency": "THB",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://psy-krasnogor.pro/#offer-family-online",
+        "name": "Консультирование пары или семьи онлайн, 90–120 минут",
+        "price": "10000",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://psy-krasnogor.pro/#offer-family-samui",
+        "name": "Консультирование пары или семьи очно на о. Самуи, 90–120 минут",
+        "price": "5000",
+        "priceCurrency": "THB",
+        "availability": "https://schema.org/InStock"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://psy-krasnogor.pro/#faq",
+        "isPartOf": { "@id": "https://psy-krasnogor.pro/#webpage" },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Сколько длится консультация?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Индивидуальная сессия длится 40–60 минут, работа с парой или семьёй — 90–120 минут."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как записаться на консультацию?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Записаться можно через Telegram: @lex4747 или через Max. Александр отвечает лично, обычно в течение дня. Приём Пн–Пт, 9:00–20:00 по времени Самуи (UTC+7) — это 5:00–16:00 МСК."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Сколько стоит консультация?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Индивидуальная консультация — 5000 ₽ онлайн или 2500 бат очно на Самуи. Работа с парой — 10 000 ₽ онлайн или 5000 бат очно. Первая встреча-знакомство 20 минут — бесплатно."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "В каком формате проходят консультации?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Консультации проходят онлайн или очно — на ваш выбор. Онлайн — через Zoom, Telegram или Max; очно — на острове Самуи в Таиланде."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Соблюдается ли конфиденциальность?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да, всё, что обсуждается на сессии, остаётся между нами. Полная конфиденциальность гарантирована."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Я никогда не был у психолога. Это не стыдно?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Нет. К психологу всё чаще обращаются не в крайнем случае, а чтобы разобраться раньше, чем станет хуже. Первая встреча — знакомство 20 минут, бесплатно: ничего не обязывает и помогает понять, подходим ли мы друг другу."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как понять, что мне нужен психолог, а не психиатр?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Если есть подозрение на клиническое состояние — тяжёлая депрессия, биполярное расстройство, выраженная тревога с соматикой — нужна консультация врача-психиатра. На первой встрече я помогу определиться. Если случай не для меня — честно скажу и порекомендую профильного коллегу."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "А вдруг психолог не поможет — я просто потеряю время?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Психотерапия — это совместная работа, и её эффективность во многом зависит от контакта со специалистом. Поэтому первая встреча 20 минут бесплатна — чтобы вы могли проверить, подходим ли мы друг другу. Если нет — ничего не теряете."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Что если партнёр против парной терапии?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Часто полезнее начать индивидуально: разобраться со своей частью и через это — повлиять на отношения. Многие пары приходят к совместной работе позже, когда видят изменения в партнёре, который уже работает с психологом."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Можно ли прийти на консультацию очно?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да. Александр Красногор принимает очно на острове Самуи в Таиланде — место встречи согласуем в переписке. Очная сессия стоит 2500 бат индивидуально и 5000 бат для пары. Если вы не на Самуи, остаётся онлайн-формат: Zoom, Telegram или Max."
+            }
+          }
+        ]
       }
     ]
   }
