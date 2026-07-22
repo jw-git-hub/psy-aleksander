@@ -71,6 +71,13 @@ expect_count index.html '<details class="faq-card' 10 'в FAQ десять во�
 expect_count index.html '"@type": "Question"' 10 'в FAQPage десять вопросов'
 expect_absent index.html 'Все консультации проходят онлайн' 'формулировка «только онлайн» убрана'
 
+section 'Метатеги'
+expect_present index.html '<title>Семейный психолог Александр Красногор — онлайн и Самуи</title>' 'title обновлён'
+expect_present index.html 'hreflang="ru"' 'hreflang ru'
+expect_present index.html 'hreflang="x-default"' 'hreflang x-default'
+expect_present index.html '<meta property="og:type" content="profile">' 'og:type = profile'
+expect_absent index.html 'content="website"' 'старый og:type убран'
+
 section 'Блок-суммари'
 expect_present index.html 'id="summary"' 'секция-суммари есть'
 expect_present index.html 'в&nbsp;профессии с 2016 года' 'указан стаж'
