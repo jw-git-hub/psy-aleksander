@@ -51,7 +51,7 @@ for forbidden in MedicalBusiness Physician MedicalClinic AggregateRating '"Revie
 done
 
 section 'Фактура: цены и длительность'
-expect_absent index.html 'от 3500' 'старая цена 3500 убрана'
+expect_absent index.html '3500 ₽' 'старая цена 3500 убрана'
 expect_absent index.html '50–60 минут' 'старая длительность 50–60 убрана'
 expect_present index.html '5000 ₽' 'цена индивидуальной онлайн-сессии'
 expect_present index.html '10 000 ₽' 'цена работы с парой онлайн'
