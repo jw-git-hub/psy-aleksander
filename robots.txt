@@ -1,5 +1,26 @@
+# Общее правило: сайт открыт для индексации
 User-agent: *
 Allow: /
 Disallow: /pages/privacy.html
+
+# ИИ-краулеры разрешены намеренно: цель — попадать в ответы ассистентов.
+# Технически дублирует правило выше, но фиксирует решение явно.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: YandexBot
+Allow: /
 
 Sitemap: https://psy-krasnogor.pro/sitemap.xml

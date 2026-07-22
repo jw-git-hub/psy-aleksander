@@ -107,6 +107,15 @@ else
   fail 'FAQ и FAQPage разошлись'
 fi
 
+section 'Техфайлы'
+expect_present robots.txt 'User-agent: GPTBot' 'GPTBot разрешён явно'
+expect_present robots.txt 'User-agent: ClaudeBot' 'ClaudeBot разрешён явно'
+expect_present robots.txt 'User-agent: PerplexityBot' 'PerplexityBot разрешён явно'
+expect_present robots.txt 'Disallow: /pages/privacy.html' 'политика закрыта от индексации'
+expect_present llms.txt '# Александр Красногор' 'llms.txt есть'
+expect_absent llms.txt 'streetAddress' 'в llms.txt нет адреса'
+expect_present sitemap.xml '<lastmod>2026-07-22</lastmod>' 'дата в sitemap обновлена'
+
 section 'JSON-LD'
 if node tools/check-jsonld.mjs index.html; then
   pass 'все блоки JSON-LD валидны'
