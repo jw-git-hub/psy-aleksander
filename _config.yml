@@ -1,0 +1,8 @@
+# GitHub Pages (Jekyll): служебные файлы остаются в репозитории,
+# но не попадают в опубликованный сайт.
+exclude:
+  - docs
+  - tools
+  - JOURNAL.md
+  - CLAUDE.md.bak
+  - .superpowers

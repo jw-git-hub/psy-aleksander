@@ -1374,6 +1374,20 @@
 
 .contacts__role {
   color: rgba(250, 248, 245, 0.75);
+  margin-bottom: var(--spacing-xs);
+}
+
+.contacts__format,
+.contacts__hours {
+  color: rgba(250, 248, 245, 0.75);
+  font-size: var(--fs-small);
+}
+
+.contacts__format {
+  margin-bottom: var(--spacing-xs);
+}
+
+.contacts__hours {
   margin-bottom: var(--spacing-lg);
 }
 

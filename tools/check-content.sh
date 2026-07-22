@@ -43,6 +43,13 @@ done
 section 'Приватность: адреса и координат быть не должно'
 expect_absent index.html 'streetAddress' 'нет streetAddress в разметке'
 expect_absent index.html '"geo"' 'нет geo-координат в разметке'
+expect_absent index.html 'latitude' 'нет latitude в index.html'
+expect_absent index.html 'longitude' 'нет longitude в index.html'
+expect_absent index.html 'GeoCoordinates' 'нет GeoCoordinates в index.html'
+expect_absent llms.txt 'streetAddress' 'нет streetAddress в llms.txt'
+expect_absent llms.txt 'latitude' 'нет latitude в llms.txt'
+expect_absent llms.txt 'longitude' 'нет longitude в llms.txt'
+expect_absent llms.txt 'GeoCoordinates' 'нет GeoCoordinates в llms.txt'
 
 section 'Обязательные формулировки'
 expect_present index.html 'не&nbsp;медицинская услуга' 'дисклеймер о немедицинском характере услуги'
@@ -67,6 +74,8 @@ section 'Фактура: очный формат и часы'
 expect_present index.html 'Самуи' 'очный формат упомянут'
 expect_present index.html 'UTC+7' 'часовой пояс Самуи указан'
 expect_present index.html 'МСК' 'пересчёт в московское время указан'
+expect_present index.html 'contacts__format' 'в контактах есть формат и локация'
+expect_present index.html 'contacts__hours' 'в контактах есть часы приёма'
 
 section 'FAQ'
 expect_present index.html 'Можно ли прийти на консультацию очно?' 'вопрос об очном приёме есть'
@@ -90,6 +99,11 @@ expect_absent index.html '"priceRange"' 'бессодержательный pric
 expect_absent index.html '"addressCountry": "RU"' 'неверная страна убрана'
 expect_absent index.html '"price": "3500"' 'устаревшая цена ушла из разметки'
 expect_count index.html '"@type": "Offer"' 5 'пять офферов'
+if node tools/check-offers.mjs index.html; then
+  pass 'цены и валюты офферов совпадают с прайсом'
+else
+  fail 'цены офферов разошлись с прайсом'
+fi
 
 section 'Метатеги'
 expect_present index.html '<title>Семейный психолог Александр Красногор — онлайн и Самуи</title>' 'title обновлён'
@@ -110,6 +124,9 @@ else
   fail 'FAQ и FAQPage разошлись'
 fi
 
+section 'Скрипты'
+expect_absent js/quiz.js '(онлайн)' 'квиз не утверждает, что формат только онлайн'
+
 section 'Сквозная консистентность'
 expect_absent index.html '3500' 'нигде не осталось старой цены'
 expect_absent index.html 'от 5000' 'цены указаны без приставки «от»'
@@ -120,10 +137,11 @@ section 'Техфайлы'
 expect_present robots.txt 'User-agent: GPTBot' 'GPTBot разрешён явно'
 expect_present robots.txt 'User-agent: ClaudeBot' 'ClaudeBot разрешён явно'
 expect_present robots.txt 'User-agent: PerplexityBot' 'PerplexityBot разрешён явно'
-expect_present robots.txt 'Disallow: /pages/privacy.html' 'политика закрыта от индексации'
+expect_present pages/privacy.html 'name="robots" content="noindex' 'политика закрыта через noindex'
 expect_present llms.txt '# Александр Красногор' 'llms.txt есть'
 expect_absent llms.txt 'streetAddress' 'в llms.txt нет адреса'
 expect_present sitemap.xml '<lastmod>2026-07-22</lastmod>' 'дата в sitemap обновлена'
+expect_present _config.yml '- docs' '_config.yml исключает docs из публикации'
 
 section 'JSON-LD'
 if node tools/check-jsonld.mjs index.html; then
