@@ -50,6 +50,21 @@ for forbidden in MedicalBusiness Physician MedicalClinic AggregateRating '"Revie
   expect_absent index.html "$forbidden" "нет $forbidden"
 done
 
+section 'Фактура: цены и длительность'
+expect_absent index.html 'от 3500' 'старая цена 3500 убрана'
+expect_absent index.html '50–60 минут' 'старая длительность 50–60 убрана'
+expect_present index.html '5000 ₽' 'цена индивидуальной онлайн-сессии'
+expect_present index.html '10 000 ₽' 'цена работы с парой онлайн'
+expect_present index.html '2500 бат' 'цена индивидуальной очной сессии'
+expect_present index.html '5000 бат' 'цена очной работы с парой'
+expect_present index.html '40–60 минут' 'длительность индивидуальной сессии'
+expect_present index.html '90–120 минут' 'длительность работы с парой'
+
+section 'Фактура: очный формат и часы'
+expect_present index.html 'Самуи' 'очный формат упомянут'
+expect_present index.html 'UTC+7' 'часовой пояс Самуи указан'
+expect_present index.html 'МСК' 'пересчёт в московское время указан'
+
 section 'JSON-LD'
 if node tools/check-jsonld.mjs index.html; then
   pass 'все блоки JSON-LD валидны'
