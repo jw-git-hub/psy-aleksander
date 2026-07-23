@@ -43,8 +43,13 @@
   <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Preload hero-фото для ускорения LCP (WebP для поддерживающих браузеров) -->
-  <link rel="preload" as="image" href="img/photo.webp" type="image/webp" fetchpriority="high">
+  <!-- Preload hero-фото для ускорения LCP (WebP для поддерживающих браузеров).
+       imagesrcset/imagesizes обязаны совпадать с <source> в hero — иначе браузер
+       предзагрузит один файл, а из srcset выберет другой и скачает оба. -->
+  <link rel="preload" as="image" type="image/webp"
+        imagesrcset="img/photo-320.webp 320w, img/photo.webp 640w"
+        imagesizes="(min-width: 1024px) 420px, 320px"
+        fetchpriority="high">
 
   <!-- Стили -->
   <link rel="stylesheet" href="css/fonts.css">
@@ -578,16 +583,20 @@
           <p class="hero__trust">Ответ обычно в&nbsp;течение дня · Пишет лично Александр, без ботов</p>
         </div>
 
-        <!-- Фото (обёртка picture для будущего WebP) -->
+        <!-- Фото. Показывается 320px, на 1024+ — 420px; 640-й исходник нужен
+             только retina-экранам, обычным отдаётся лёгкий 320-й. -->
         <figure class="hero__media">
           <picture>
-            <source type="image/webp" srcset="img/photo.webp">
+            <source
+              type="image/webp"
+              srcset="img/photo-320.webp 320w, img/photo.webp 640w"
+              sizes="(min-width: 1024px) 420px, 320px">
             <img
               class="hero__photo"
               src="img/photo.jpg"
               alt="Александр Красногор, семейный психолог"
-              width="600"
-              height="600"
+              width="640"
+              height="640"
               fetchpriority="high"
               decoding="async"
             >
@@ -883,15 +892,18 @@
         <!-- Портрет -->
         <figure class="about__photo animate-on-scroll">
           <picture>
-            <source type="image/webp" srcset="img/photo.webp">
+            <source
+              type="image/webp"
+              srcset="img/photo-320.webp 320w, img/photo.webp 640w"
+              sizes="300px">
             <img
               class="about__photo-img"
               src="img/photo.jpg"
               alt="Александр Красногор — семейный психолог"
               loading="lazy"
               decoding="async"
-              width="600"
-              height="600"
+              width="640"
+              height="640"
             >
           </picture>
         </figure>
