@@ -1098,6 +1098,52 @@
   transform: rotate(90deg);
 }
 
+/* Кнопки перелистывания документов.
+   Скрыты, когда документ всего один (класс ставит main.js). */
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+}
+
+.lightbox__nav:hover {
+  background-color: var(--color-accent);
+}
+
+.lightbox__nav--prev {
+  left: var(--spacing-md);
+}
+
+.lightbox__nav--next {
+  right: var(--spacing-md);
+}
+
+.lightbox__nav[hidden] {
+  display: none;
+}
+
+/* На узких экранах стрелки прижимаем к краям, чтобы не перекрывать скан */
+@media (max-width: 600px) {
+  .lightbox__nav--prev {
+    left: var(--spacing-xs);
+  }
+
+  .lightbox__nav--next {
+    right: var(--spacing-xs);
+  }
+}
+
 /* =============================================
    Стоимость
    ============================================= */

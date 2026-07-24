@@ -215,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* =============================================
      5. Lightbox для документов
      - клик по миниатюре открывает полноэкранный просмотр
+     - перелистывание стрелками, клавишами ← → и свайпом
      - закрытие по кнопке, клику по фону или Esc
      - inert на закрытой модалке + ловушка фокуса на открытой
      ============================================= */
@@ -222,6 +223,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxImg = lightbox ? lightbox.querySelector('.lightbox__img') : null;
   const lightboxCaption = lightbox ? lightbox.querySelector('.lightbox__caption') : null;
   const lightboxCloseBtn = lightbox ? lightbox.querySelector('.lightbox__close') : null;
+  const lightboxPrevBtn = lightbox ? lightbox.querySelector('.lightbox__nav--prev') : null;
+  const lightboxNextBtn = lightbox ? lightbox.querySelector('.lightbox__nav--next') : null;
   const docButtons = document.querySelectorAll('.doc-card__btn');
 
   // Соседи модалки, которым нужно ставить inert на время её открытия —
@@ -238,21 +241,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let lastFocusedDocBtn = null;
+  let currentDocIndex = -1;
 
-  const openLightbox = (src, caption, alt, sourceBtn) => {
-    if (!lightbox || !lightboxImg) return;
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
+  // Показывает документ по индексу карточки. Индекс закольцован:
+  // после последнего идёт первый, перед первым — последний.
+  const showDocAt = (index) => {
+    const total = docButtons.length;
+    if (!total || !lightboxImg) return;
+    const safeIndex = (index + total) % total;
+    const btn = docButtons[safeIndex];
+    const thumb = btn.querySelector('img');
+    currentDocIndex = safeIndex;
+    lightboxImg.src = btn.dataset.docSrc;
+    lightboxImg.alt = thumb ? thumb.alt : '';
     if (lightboxCaption) {
-      lightboxCaption.textContent = caption || '';
+      lightboxCaption.textContent = btn.dataset.docCaption || '';
     }
+    // Esc вернёт фокус на карточку того документа, который смотрели последним
+    lastFocusedDocBtn = btn;
+  };
+
+  const showNextDoc = () => showDocAt(currentDocIndex + 1);
+  const showPrevDoc = () => showDocAt(currentDocIndex - 1);
+
+  const openLightbox = (index) => {
+    if (!lightbox || !lightboxImg) return;
+    showDocAt(index);
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
     lightbox.removeAttribute('inert');
     // Делаем остальной контент недоступным для фокуса и скринридеров
     lightboxSiblings.forEach((el) => el.setAttribute('inert', ''));
     document.body.classList.add('is-locked');
-    lastFocusedDocBtn = sourceBtn || null;
     if (lightboxCloseBtn) {
       lightboxCloseBtn.focus();
     }
@@ -270,23 +290,31 @@ document.addEventListener('DOMContentLoaded', () => {
       lightboxImg.removeAttribute('src');
       lightboxImg.alt = '';
     }
+    currentDocIndex = -1;
     if (lastFocusedDocBtn) {
       lastFocusedDocBtn.focus();
       lastFocusedDocBtn = null;
     }
   };
 
-  docButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const src = btn.dataset.docSrc;
-      const caption = btn.dataset.docCaption || '';
-      const img = btn.querySelector('img');
-      const alt = img ? img.alt : '';
-      if (src) {
-        openLightbox(src, caption, alt, btn);
-      }
-    });
+  docButtons.forEach((btn, index) => {
+    btn.addEventListener('click', () => openLightbox(index));
   });
+
+  if (lightboxPrevBtn) {
+    lightboxPrevBtn.addEventListener('click', showPrevDoc);
+  }
+
+  if (lightboxNextBtn) {
+    lightboxNextBtn.addEventListener('click', showNextDoc);
+  }
+
+  // Перелистывать нечего, если документ всего один
+  if (docButtons.length < 2) {
+    [lightboxPrevBtn, lightboxNextBtn].forEach((btn) => {
+      if (btn) btn.setAttribute('hidden', '');
+    });
+  }
 
   if (lightboxCloseBtn) {
     lightboxCloseBtn.addEventListener('click', closeLightbox);
@@ -299,6 +327,48 @@ document.addEventListener('DOMContentLoaded', () => {
         closeLightbox();
       }
     });
+  }
+
+  // Стрелки на клавиатуре листают документы, пока модалка открыта
+  document.addEventListener('keydown', (event) => {
+    if (!lightbox || !lightbox.classList.contains('is-open')) return;
+    if (event.key === 'ArrowRight') {
+      showNextDoc();
+    } else if (event.key === 'ArrowLeft') {
+      showPrevDoc();
+    }
+  });
+
+  /* Свайп по модалке.
+     Короткие касания считаем промахом, заметно вертикальные — прокруткой. */
+  const SWIPE_MIN_DISTANCE = 50;
+  const SWIPE_MAX_VERTICAL = 80;
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  const rememberTouchStart = (event) => {
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  };
+
+  const handleSwipeEnd = (event) => {
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+    if (Math.abs(deltaY) > SWIPE_MAX_VERTICAL) return;
+    if (Math.abs(deltaX) < SWIPE_MIN_DISTANCE) return;
+    if (deltaX < 0) {
+      showNextDoc();
+    } else {
+      showPrevDoc();
+    }
+  };
+
+  if (lightbox && docButtons.length > 1) {
+    lightbox.addEventListener('touchstart', rememberTouchStart, { passive: true });
+    lightbox.addEventListener('touchend', handleSwipeEnd, { passive: true });
   }
 
 
