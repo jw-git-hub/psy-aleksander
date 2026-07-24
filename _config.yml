@@ -4,5 +4,6 @@ exclude:
   - docs
   - tools
   - JOURNAL.md
+  - README.md
   - CLAUDE.md.bak
   - .superpowers
