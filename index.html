@@ -38,25 +38,19 @@
   <meta name="twitter:image" content="https://psy-krasnogor.pro/img/photo.jpg">
 
   <!-- Локальные шрифты: preload критичных файлов для LCP -->
-  <link rel="preload" href="fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/inter-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/manrope-var.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Preload hero-фото для ускорения LCP (WebP для поддерживающих браузеров).
        imagesrcset/imagesizes обязаны совпадать с <source> в hero — иначе браузер
        предзагрузит один файл, а из srcset выберет другой и скачает оба. -->
   <link rel="preload" as="image" type="image/webp"
         imagesrcset="img/photo-320.webp 320w, img/photo.webp 640w"
-        imagesizes="(min-width: 1024px) 420px, 320px"
+        imagesizes="320px"
         fetchpriority="high">
 
   <!-- Стили -->
-  <link rel="stylesheet" href="css/fonts.css">
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/app.min.css">
 
   <!-- Признак живого JS. Скрытие .animate-on-scroll завязано на класс .js,
        поэтому при отключённом или упавшем скрипте контент остаётся видимым,
@@ -65,8 +59,7 @@
   <script>document.documentElement.classList.add('js');</script>
 
   <!-- Скрипты (defer — загружаются параллельно с HTML, выполняются после парсинга DOM) -->
-  <script src="js/main.js" defer></script>
-  <script src="js/quiz.js" defer></script>
+  <script src="js/app.min.js" defer></script>
 
   <!-- JSON-LD: связный граф — специалист, практика, услуги, офферы, FAQ -->
   <script type="application/ld+json">
@@ -590,7 +583,7 @@
             <source
               type="image/webp"
               srcset="img/photo-320.webp 320w, img/photo.webp 640w"
-              sizes="(min-width: 1024px) 420px, 320px">
+              sizes="320px">
             <img
               class="hero__photo"
               src="img/photo.jpg"

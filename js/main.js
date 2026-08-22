@@ -165,9 +165,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.style.setProperty('--header-height', `${height}px`);
   };
 
-  // Инициализация при загрузке + слушатели скролла/ресайза
-  updateHeaderState();
-  updateHeaderHeightVar();
+  // Инициализация при загрузке + слушатели скролла/ресайза.
+  // Первые замеры — в requestAnimationFrame: оба читают геометрию
+  // (scrollY и offsetHeight) и, вызванные прямо из DOMContentLoaded,
+  // заставляют браузер пересчитать раскладку до первой отрисовки.
+  requestAnimationFrame(() => {
+    updateHeaderState();
+    updateHeaderHeightVar();
+  });
   window.addEventListener('scroll', updateHeaderState, { passive: true });
   window.addEventListener('resize', updateHeaderHeightVar);
   window.addEventListener('load', updateHeaderHeightVar);

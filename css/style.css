@@ -1947,11 +1947,6 @@
     font-size: 0.8125rem;
   }
 
-  /* --- Hero: фото крупнее на десктопе --- */
-  .hero__media {
-    width: 420px;
-  }
-
   /* --- Процесс: 4 карточки в ряд --- */
   .process__list {
     grid-template-columns: repeat(4, 1fr);

@@ -143,6 +143,35 @@ expect_absent llms.txt 'streetAddress' 'в llms.txt нет адреса'
 expect_present sitemap.xml '<lastmod>2026-07-22</lastmod>' 'дата в sitemap обновлена'
 expect_present _config.yml '- docs' '_config.yml исключает docs из публикации'
 
+section 'Сборка'
+# Собранные *.min.* содержат отпечаток исходников, из которых сделаны.
+# Если исходник правили, а tools/build.sh не гоняли — отпечатки разойдутся,
+# и на сайт уедет старая версия стилей или скриптов.
+expect_fresh() {
+  local target="$1"; shift
+  if [ ! -f "$target" ]; then fail "$target не собран (запусти bash tools/build.sh)"; return; fi
+  local expected actual
+  expected=$(cat "$@" | shasum -a 256 | cut -c1-12)
+  actual=$(grep -oE 'src:[0-9a-f]{12}' "$target" | tail -1 | cut -d: -f2)
+  if [ "$expected" = "$actual" ]; then
+    pass "$target собран из актуальных исходников"
+  else
+    fail "$target устарел — правился исходник, но не запускался tools/build.sh"
+  fi
+}
+
+expect_fresh css/app.min.css css/fonts.css css/variables.css css/reset.css css/base.css css/style.css
+expect_fresh css/legal.min.css css/legal.css
+expect_fresh js/app.min.js js/main.js js/quiz.js
+
+section 'Шрифты'
+expect_present css/fonts.css 'inter-var.woff2' 'Inter подключён одним файлом'
+expect_present css/fonts.css 'manrope-var.woff2' 'Manrope подключён одним файлом'
+expect_absent css/fonts.css 'unicode-range:' 'нарезка по unicode-range убрана'
+for font in fonts/inter-var.woff2 fonts/manrope-var.woff2; do
+  if [ -f "$font" ]; then pass "$font на месте"; else fail "$font не собран (tools/build-fonts.py)"; fi
+done
+
 section 'JSON-LD'
 if node tools/check-jsonld.mjs index.html; then
   pass 'все блоки JSON-LD валидны'
