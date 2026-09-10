@@ -1728,6 +1728,14 @@
 .quiz__copy-btn.is-copied .quiz__copy-default { display: none; }
 .quiz__copy-btn.is-copied .quiz__copy-success { display: inline; }
 
+/* Состояние "буфер отказал" — текст выделен, копировать вручную.
+   Держится до следующего клика: человеку надо успеть прочитать и нажать Ctrl+C */
+.quiz__copy-btn.is-copy-failed .quiz__copy-default { display: none; }
+.quiz__copy-btn.is-copy-failed .quiz__copy-error {
+  display: inline;
+  color: var(--color-accent);
+}
+
 /* Скрытие элементов с атрибутом [hidden] внутри квиза.
    Специфичность (0,1,1) перекрывает (0,1,0) у .btn и предотвращает
    показ кнопки «Далее» на финальном экране результата */
@@ -1793,9 +1801,13 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* --- Обо мне: 2 колонки (фото + текст) --- */
+  /* --- Обо мне: 2 колонки (фото + текст) ---
+     minmax(0, 1fr), а не 1fr: у 1fr минимальный размер равен min-content,
+     поэтому широкий потомок не даёт колонке сжаться и выпирает всю сетку
+     за пределы экрана. Это страховка на будущее — за конкретный случай
+     с блоком регалий отвечает auto-fit ниже. */
   .about__grid {
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 300px minmax(0, 1fr);
     gap: var(--spacing-xl);
     align-items: center;
   }
@@ -1815,8 +1827,13 @@
   }
 
   /* --- Числовые карточки credentials: 3 колонки --- */
+  /* auto-fit вместо repeat(3, 1fr): у обычной колонки 1fr минимум равен
+     min-content, а подписи держат неразрывные пробелы («и&nbsp;удостоверения»)
+     и ниже ~140px не сжимаются. Три такие колонки требовали 448px, которых
+     в текстовой колонке на 768–832px нет, — и распирали страницу вбок
+     на 64px. Теперь список сам переходит на две колонки и обратно. */
   .about__creds-list {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(8.75rem, 1fr));
   }
 
   /* --- Стоимость: 2 карточки в ряд --- */

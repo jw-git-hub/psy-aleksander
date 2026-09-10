@@ -74,9 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
       step.classList.toggle('quiz__step--active', idx === current);
     });
 
-    // Кнопка "Назад" — скрыта на первом и на финальном шаге
+    // Кнопка "Назад" — скрыта только на первом шаге.
+    // С экрана результата вернуться можно: человек мог ошибиться в ответе
+    // и должен иметь возможность переписать свой запрос.
     if (prevBtn) {
-      prevBtn.hidden = (current === 0 || current >= totalQuestions);
+      prevBtn.hidden = (current === 0);
     }
 
     // На финальном шаге кнопка "Далее" не нужна
@@ -101,10 +103,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  /* Перевод фокуса на текущий шаг.
+     Кнопки «Далее» и «Назад» становятся disabled или hidden прямо под фокусом,
+     и браузер роняет его на <body> — клавиатурный пользователь после каждого
+     вопроса начинал бы обход страницы заново. Вызываем только при явной
+     навигации: на первой отрисовке фокус трогать нельзя. */
+  const focusCurrentStep = () => {
+    const step = steps[current];
+    if (step) step.focus({ preventScroll: true });
+  };
+
   /* Сборка результата на финальном шаге */
+  let quizCompletedFired = false;
+
   const showResult = () => {
-    // Цель quiz_completed — квиз пройден до конца
-    if (typeof window.ym === 'function') {
+    // Цель quiz_completed — квиз пройден до конца. Отправляем один раз:
+    // с экрана результата можно вернуться назад и прийти сюда снова.
+    if (!quizCompletedFired && typeof window.ym === 'function') {
+      quizCompletedFired = true;
       window.ym(109129242, 'reachGoal', 'quiz_completed');
     }
     const data = new FormData(form);
@@ -145,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showResult();
       }
       render();
+      focusCurrentStep();
     });
   }
 
@@ -153,39 +170,66 @@ document.addEventListener('DOMContentLoaded', () => {
       if (current > 0) {
         current -= 1;
         render();
+        focusCurrentStep();
       }
     });
   }
 
   /* Copy-to-clipboard */
+  const COPY_SUCCESS_MS = 2000;
+
+  /* Фолбэк для старых браузеров и незащищённого контекста.
+     execCommand при отказе возвращает false и не бросает исключение — без
+     проверки возврата кнопка рапортовала бы об успехе на пустом буфере. */
+  const copyViaExecCommand = (text) => {
+    const field = document.createElement('textarea');
+    field.value = text;
+    field.setAttribute('readonly', '');
+    field.className = 'quiz__clipboard-fallback';
+    document.body.appendChild(field);
+    field.select();
+    const isCopied = document.execCommand('copy');
+    document.body.removeChild(field);
+    if (!isCopied) {
+      throw new Error('execCommand copy отклонён браузером');
+    }
+  };
+
+  const copyToClipboard = async (text) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    copyViaExecCommand(text);
+  };
+
+  /* Выделяем текст, чтобы человеку осталось нажать Ctrl+C */
+  const selectAnswerText = () => {
+    const selection = window.getSelection();
+    if (!selection) return;
+    const range = document.createRange();
+    range.selectNodeContents(answerTextEl);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
+  const setCopyState = (state) => {
+    copyBtn.classList.toggle('is-copied', state === 'copied');
+    copyBtn.classList.toggle('is-copy-failed', state === 'failed');
+  };
+
   if (copyBtn && answerTextEl) {
     copyBtn.addEventListener('click', async () => {
       const text = answerTextEl.textContent || '';
       try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-        } else {
-          // Фолбэк для старых браузеров / file://
-          const ta = document.createElement('textarea');
-          ta.value = text;
-          ta.setAttribute('readonly', '');
-          ta.className = 'quiz__clipboard-fallback';
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand('copy');
-          document.body.removeChild(ta);
-        }
-        copyBtn.classList.add('is-copied');
-        setTimeout(() => copyBtn.classList.remove('is-copied'), 2000);
+        await copyToClipboard(text);
+        setCopyState('copied');
+        setTimeout(() => setCopyState('idle'), COPY_SUCCESS_MS);
       } catch (err) {
-        // Если clipboard недоступен — выделяем текст для ручного копирования
-        const range = document.createRange();
-        range.selectNodeContents(answerTextEl);
-        const sel = window.getSelection();
-        if (sel) {
-          sel.removeAllRanges();
-          sel.addRange(range);
-        }
+        // Отказ буфера обмена — во встроенном браузере мессенджера или при
+        // отклонённом разрешении. Молчать нельзя: это ключевой шаг воронки.
+        selectAnswerText();
+        setCopyState('failed');
       }
     });
   }

@@ -6,7 +6,38 @@
 
 'use strict';
 
+/* Бандл доехал и выполняется. Инлайн-скрипт в <head> ждёт этот признак:
+   не увидев его за отведённое время, он снимет класс .js и раскроет страницу —
+   иначе весь контент ниже шапки остался бы с opacity: 0. */
+document.documentElement.classList.add('js-ready');
+
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Шапка нужна и меню (её нельзя гасить, пока меню открыто),
+  // и smooth scroll (высота вычитается из позиции цели)
+  const header = document.querySelector('.header');
+
+  /* =============================================
+     0. Ловушка фокуса для оверлеев (меню, лайтбокс)
+     - прячем от Tab и скринридеров всё, что лежит рядом с оверлеем
+     - помимо header/main/footer у <body> есть skip-link, sticky-CTA и
+       затемнение: раньше фокус уходил на них — за фон оверлея, где рамка
+       фокуса не видна вообще
+     - снимаем inert только с того, чему сами его поставили, чтобы не сбросить
+       чужое состояние (закрытая модалка держит inert постоянно)
+     ============================================= */
+  const hideSiblingsFromFocus = (keepInteractive) => {
+    return Array.from(document.body.children)
+      .filter((el) => el !== keepInteractive && !el.hasAttribute('inert'))
+      .map((el) => {
+        el.setAttribute('inert', '');
+        return el;
+      });
+  };
+
+  const restoreSiblingsFocus = (elements) => {
+    elements.forEach((el) => el.removeAttribute('inert'));
+  };
 
   /* =============================================
      1. Бургер-меню (мобильное)
@@ -49,6 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Элементы, которым inert поставило именно открытие меню
+  let menuInertedSiblings = [];
+
   const openMenu = () => {
     if (!nav || !burger) return;
     nav.classList.add('nav--open');
@@ -57,6 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('is-locked');
     burger.setAttribute('aria-expanded', 'true');
     burger.setAttribute('aria-label', 'Закрыть меню');
+    // Шапка остаётся доступной: в ней и меню, и кнопка-бургер
+    menuInertedSiblings = hideSiblingsFromFocus(header);
     syncNavInert();
   };
 
@@ -68,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('is-locked');
     burger.setAttribute('aria-expanded', 'false');
     burger.setAttribute('aria-label', 'Открыть меню');
+    restoreSiblingsFocus(menuInertedSiblings);
+    menuInertedSiblings = [];
     syncNavInert();
   };
 
@@ -110,9 +148,20 @@ document.addEventListener('DOMContentLoaded', () => {
      - закрываем мобильное меню при переходе
      - учитываем фиксированную шапку при позиционировании
      ============================================= */
-  const header = document.querySelector('.header');
-
   const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+
+  /* Ставит фокус на цель якоря.
+     Секции и заголовки по умолчанию не фокусируемы, поэтому назначаем
+     tabindex="-1" на лету и снимаем его после ухода фокуса — чтобы не копить
+     в разметке служебные атрибуты. preventScroll обязателен: прокрутку уже
+     ведёт scrollTo, и обычный focus оборвал бы её мгновенным прыжком. */
+  const focusScrollTarget = (target) => {
+    if (!target.hasAttribute('tabindex')) {
+      target.setAttribute('tabindex', '-1');
+      target.addEventListener('blur', () => target.removeAttribute('tabindex'), { once: true });
+    }
+    target.focus({ preventScroll: true });
+  };
 
   smoothScrollLinks.forEach((link) => {
     link.addEventListener('click', (event) => {
@@ -125,7 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       event.preventDefault();
 
-      // Закрываем мобильное меню перед прокруткой
+      // Закрываем мобильное меню перед прокруткой: пока оно открыто,
+      // main лежит под inert и фокус в него не встанет
       if (nav && nav.classList.contains('nav--open')) {
         closeMenu();
       }
@@ -138,6 +188,13 @@ document.addEventListener('DOMContentLoaded', () => {
         top: targetTop,
         behavior: 'smooth'
       });
+
+      // Своя прокрутка не делает того, что штатный переход по якорю делает сам:
+      // не переносит фокус и не пишет адрес. Без этого Tab после клика по пункту
+      // меню продолжался с той же ссылки, skip-link ничего не пропускал,
+      // а секцию нельзя было отправить ссылкой.
+      focusScrollTarget(target);
+      history.pushState(null, '', href);
     });
   });
 
@@ -232,13 +289,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxNextBtn = lightbox ? lightbox.querySelector('.lightbox__nav--next') : null;
   const docButtons = document.querySelectorAll('.doc-card__btn');
 
-  // Соседи модалки, которым нужно ставить inert на время её открытия —
-  // так Tab не сможет уйти на скрытый контент за фоном
-  const lightboxSiblings = [
-    document.querySelector('header.header'),
-    document.querySelector('main'),
-    document.querySelector('footer.footer')
-  ].filter(Boolean);
+  // Элементы, которым inert поставило именно открытие модалки
+  let lightboxInertedSiblings = [];
 
   // Закрытая модалка не должна попадать в порядок Tab.
   if (lightbox && !lightbox.classList.contains('is-open')) {
@@ -247,6 +299,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let lastFocusedDocBtn = null;
   let currentDocIndex = -1;
+
+  /* Полноразмерные сканы лежат в двух форматах, WebP легче JPEG на 22 %.
+     Миниатюрам формат выбирает <picture>, а модалка подставляет src напрямую —
+     поэтому спрашиваем браузер сами. Одной проверкой на старте: так браузер
+     без поддержки WebP не платит провалившимся запросом за каждый документ.
+     Канвас, который не умеет WebP, молча отдаёт PNG — по префиксу это видно. */
+  const supportsWebp = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    return canvas.toDataURL('image/webp').startsWith('data:image/webp');
+  };
+
+  const docSrcKey = supportsWebp() ? 'docSrcWebp' : 'docSrc';
 
   // Показывает документ по индексу карточки. Индекс закольцован:
   // после последнего идёт первый, перед первым — последний.
@@ -257,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = docButtons[safeIndex];
     const thumb = btn.querySelector('img');
     currentDocIndex = safeIndex;
-    lightboxImg.src = btn.dataset.docSrc;
+    lightboxImg.src = btn.dataset[docSrcKey] || btn.dataset.docSrc;
     lightboxImg.alt = thumb ? thumb.alt : '';
     if (lightboxCaption) {
       lightboxCaption.textContent = btn.dataset.docCaption || '';
@@ -276,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lightbox.setAttribute('aria-hidden', 'false');
     lightbox.removeAttribute('inert');
     // Делаем остальной контент недоступным для фокуса и скринридеров
-    lightboxSiblings.forEach((el) => el.setAttribute('inert', ''));
+    lightboxInertedSiblings = hideSiblingsFromFocus(lightbox);
     document.body.classList.add('is-locked');
     if (lightboxCloseBtn) {
       lightboxCloseBtn.focus();
@@ -288,7 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
     lightbox.classList.remove('is-open');
     lightbox.setAttribute('aria-hidden', 'true');
     lightbox.setAttribute('inert', '');
-    lightboxSiblings.forEach((el) => el.removeAttribute('inert'));
+    restoreSiblingsFocus(lightboxInertedSiblings);
+    lightboxInertedSiblings = [];
     document.body.classList.remove('is-locked');
     // Очищаем src, чтобы не держать большой ресурс в памяти
     if (lightboxImg) {

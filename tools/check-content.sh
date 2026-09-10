@@ -8,6 +8,7 @@ failures=0
 
 pass() { printf '  \033[32m+\033[0m %s\n' "$1"; }
 fail() { printf '  \033[31m-\033[0m %s\n' "$1"; failures=$((failures + 1)); }
+skip() { printf '  \033[33m~\033[0m %s\n' "$1"; }
 section() { printf '\n%s\n' "$1"; }
 
 # Подстрока обязана присутствовать в файле
@@ -63,10 +64,12 @@ done
 section 'Фактура: цены и длительность'
 expect_absent index.html '3500 ₽' 'старая цена 3500 убрана'
 expect_absent index.html '50–60 минут' 'старая длительность 50–60 убрана'
-expect_present index.html '5000 ₽' 'цена индивидуальной онлайн-сессии'
-expect_present index.html '10 000 ₽' 'цена работы с парой онлайн'
-expect_present index.html '2500 бат' 'цена индивидуальной очной сессии'
-expect_present index.html '5000 бат' 'цена очной работы с парой'
+# Цены проверяем внутри ячейки прайса, а не «где-нибудь в файле»: раньше
+# проверка сходилась на любом совпадении — хоть в тексте FAQ, хоть в комментарии
+expect_present index.html '<span class="pricing-card__price">5000 ₽</span>' 'цена индивидуальной онлайн-сессии'
+expect_present index.html '<span class="pricing-card__price">10 000 ₽</span>' 'цена работы с парой онлайн'
+expect_present index.html '<span class="pricing-card__price">2500 бат</span>' 'цена индивидуальной очной сессии'
+expect_present index.html '<span class="pricing-card__price">5000 бат</span>' 'цена очной работы с парой'
 expect_present index.html '40–60 минут' 'длительность индивидуальной сессии'
 expect_present index.html '90–120 минут' 'длительность работы с парой'
 
@@ -140,7 +143,35 @@ expect_present robots.txt 'User-agent: PerplexityBot' 'PerplexityBot разре�
 expect_present pages/privacy.html 'name="robots" content="noindex' 'политика закрыта через noindex'
 expect_present llms.txt '# Александр Красногор' 'llms.txt есть'
 expect_absent llms.txt 'streetAddress' 'в llms.txt нет адреса'
-expect_present sitemap.xml '<lastmod>2026-07-22</lastmod>' 'дата в sitemap обновлена'
+# Подтверждение прав в Вебмастере держится на этом мета-теге. Уберут его —
+# Яндекс отзовёт права на сайт, и заметить это можно сильно позже
+expect_present index.html '<meta name="yandex-verification" content="be104455a8203159">' 'подтверждение прав в Яндекс.Вебмастере на месте'
+expect_present googleca1bc4eded3d2038.html 'google-site-verification' 'подтверждение прав в Google Search Console на месте'
+
+# Дата в sitemap раньше была вписана в проверку константой — она сходилась
+# сама с собой и пропустила расхождение в месяц. Сверяем с реальной датой
+# последней правки страницы: пока index.html не закоммичен, ждём сегодняшнюю.
+check_sitemap_date() {
+  local declared expected
+  declared=$(grep -oE '<lastmod>[0-9-]+</lastmod>' sitemap.xml | head -1 | tr -dc '0-9-')
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    skip 'дата в sitemap (нет git — сверить не с чем)'
+    return
+  fi
+  if git diff --quiet -- index.html 2>/dev/null; then
+    expected=$(git log -1 --format=%cs -- index.html)
+  else
+    expected=$(date +%F)
+  fi
+  if [ -z "$expected" ]; then
+    skip 'дата в sitemap (история index.html пуста)'
+  elif [ "$declared" \< "$expected" ]; then
+    fail "дата в sitemap отстала: $declared при правке страницы $expected"
+  else
+    pass "дата в sitemap не отстаёт от правок ($declared)"
+  fi
+}
+check_sitemap_date
 expect_present _config.yml '- docs' '_config.yml исключает docs из публикации'
 
 section 'Сборка'
@@ -177,6 +208,16 @@ if node tools/check-jsonld.mjs index.html; then
   pass 'все блоки JSON-LD валидны'
 else
   fail 'JSON-LD не парсится'
+fi
+
+# Всё выше проверяет исходник — то, что видно в файле. Поведение проверяется
+# отдельно, в настоящем браузере: сайт поднимается локально, по нему кликают
+# и ходят табом. Без Chrome секция сама себя пропускает.
+section 'Поведение в браузере'
+if node tools/check-behavior.mjs; then
+  :
+else
+  failures=$((failures + 1))
 fi
 
 printf '\n'
