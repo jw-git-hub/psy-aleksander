@@ -45,3 +45,40 @@ jobs:
 
       - name: Все проверки
         run: bash tools/check-content.sh
+
+  # Сборка — тем же Jekyll, которым Pages собирал сайт из ветки: он уважает
+  # exclude из _config.yml. Собрать иначе (просто выложить папку) значило бы
+  # опубликовать docs, tools, JOURNAL.md и README — сейчас они закрыты.
+  # Пока это только сборка: посмотреть, что попадёт наружу. Публикация
+  # добавляется следующим шагом.
+  build:
+    name: Сборка сайта
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Что попадёт на сайт
+        run: |
+          echo "Верхний уровень:"
+          ls -A _site
+          echo
+          for closed in docs tools JOURNAL.md README.md README.en.md; do
+            if [ -e "_site/$closed" ]; then
+              echo "НАРУЖУ УШЛО ЗАКРЫТОЕ: $closed" >&2
+              exit 1
+            fi
+            echo "закрыто, как и было: $closed"
+          done
+          for needed in index.html CNAME llms.txt robots.txt sitemap.xml css js fonts img pages; do
+            if [ ! -e "_site/$needed" ]; then
+              echo "ПОТЕРЯЛОСЬ: $needed" >&2
+              exit 1
+            fi
+          done
+          echo "всё нужное на месте"
