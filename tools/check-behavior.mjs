@@ -13,6 +13,8 @@
 
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
+import { once } from 'node:events';
+import { setTimeout as delay } from 'node:timers/promises';
 import { readFile, mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, extname, normalize } from 'node:path';
@@ -452,9 +454,30 @@ for (const scenario of scenarios) {
   console.log(`  ${mark} ${scenario.name}\n      ${result.detail}`);
 }
 
+/** Убрать временный профиль Chrome.
+ *
+ *  `chrome.kill()` только посылает сигнал и сразу возвращается, а браузер ещё
+ *  какое-то время дописывает и подчищает свой профиль. Удалять папку в этот
+ *  момент — гонка: 20.09.2026 на машине сборки она уронила проверку с ENOTEMPTY,
+ *  когда все восемь сценариев были зелёными. Ждём выхода браузера, и уже потом
+ *  удаляем, с повторами: их `rm` делает как раз на ENOTEMPTY и EBUSY.
+ *
+ *  Уборка не должна решать судьбу проверки: не удалилось — это мусор
+ *  во временной папке, а не провал сайта. */
+async function removeProfile(dir, browser) {
+  if (browser.exitCode === null && browser.signalCode === null) {
+    await Promise.race([once(browser, 'exit'), delay(5000)]);
+  }
+  try {
+    await rm(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+  } catch (error) {
+    console.log(`      (временный профиль ${dir} не удалился: ${error.code ?? error.message})`);
+  }
+}
+
 client.socket.close();
 chrome.kill();
 server.close();
-await rm(profile, { recursive: true, force: true });
+await removeProfile(profile, chrome);
 
 process.exit(failures === 0 ? 0 : 1);
