@@ -1,0 +1,41 @@
+# Проверки перед публикацией.
+#
+# До 20.09.2026 проверки запускались руками, и сайт уходил в интернет, даже
+# если они падали. Теперь правка попадает на сайт только через этот файл:
+# сначала проверки, и лишь потом публикация.
+#
+# Проверки — те же, что запускаются локально: `bash tools/check-content.sh`
+# (разделы, якоря, цены, запрет адреса, JSON-LD, FAQ, офферы) плюс
+# `check-behavior.mjs` — настоящий Chrome ходит по поднятому рядом сайту.
+# Зависимостей нет: ни npm-пакетов, ни установки браузера.
+name: Проверки и публикация
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Проверки сайта
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Без браузера check-behavior.mjs молча пропускает свою секцию,
+      # и половина обещания «сайт проверяет себя» перестала бы работать
+      # незаметно. Поэтому отсутствие Chrome — это провал, а не пропуск.
+      - name: Chrome на месте
+        run: |
+          if [ -x /usr/bin/google-chrome ] || [ -x /usr/bin/chromium ]; then
+            echo "Chrome найден: $(command -v google-chrome chromium | head -1)"
+          else
+            echo "На машине сборки нет Chrome — проверки поведения молча пропустились бы." >&2
+            exit 1
+          fi
+
+      - name: Все проверки
+        run: bash tools/check-content.sh
